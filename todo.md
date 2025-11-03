@@ -1,8 +1,8 @@
 ## Java
-- [] Hello World no Java
+- [X] Hello World no Java
 
 ## C++
-- [] Hello World no C++
+- [X] Hello World no C++
 
 ## Clojure
 - [X] Hello World no Clojure
