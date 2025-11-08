@@ -1,8 +1,14 @@
 //gerado por GPT
 🧩 1. Fundamentos essenciais (todo dev deve dominar)
 Tipo	Algoritmo / Tópico	O que testa
-🔁 Controle de fluxo	FizzBuzz, Palíndromo, Fibonacci, Fatorial	Lógica básica e domínio de loops, condicionais e recursão
-🔡 Strings	Reverter string, contar caracteres, anagramas, substring	Manipulação de texto e uso de StringBuilder
+🔁 Controle de fluxo (Fatorial, Lógica básica e domínio de loops, condicionais e recursão)	
+    - [] FizzBuzz <AQUI>,
+    - [X] Palíndromo,
+    - [] Fibonacci <AQUI>, 
+🔡 Strings (Manipulação de texto e uso de StringBuilder)
+    - [] Reverter string
+    - [] contar caracteres<AQUI>
+    - [] anagramas, substring	
 🔢 Números	Máximo/mínimo, soma, média, contagem de pares/ímpares	Operações básicas e uso de arrays
 🎯 Busca	Linear Search, Binary Search	Entendimento de algoritmos O(n) vs O(log n)
 🧮 Ordenação	Bubble Sort, Insertion Sort, Selection Sort	Compreensão de laços aninhados e complexidade
@@ -12,8 +18,8 @@ Tipo	Algoritmo / Tópico	O que testa
 
 🧠 2. Estruturas de dados (o coração das entrevistas)
 Estrutura	Algoritmos típicos que pedem	O que esperam de você
-Array / List	Rotacionar array, encontrar duplicatas, somar pares, two-sum	Indexação e iteração eficiente
-Stack (Pilha)	Validar parênteses, converter expressões (infixa/pós-fixa)	Entendimento de LIFO e recursão
+Array / List	Rotacionar array <AQUI>, encontrar duplicatas, somar pares, two-sum	Indexação e iteração eficiente
+Stack (Pilha)	Validar parênteses<AQUI>, converter expressões (infixa/pós-fixa)	Entendimento de LIFO e recursão
 Queue (Fila)	Simular fila de atendimento, BFS em grafos	Entendimento de FIFO
 Linked List	Reverter lista, detectar ciclo (Floyd’s algorithm), merge de listas	Manipulação de ponteiros/referências
 HashMap / Set	Detectar duplicatas, contagem de frequência, anagramas	Uso de tabelas de hash
