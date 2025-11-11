@@ -9,7 +9,7 @@ public class FibonnaciJava {
         scanner.close();
 
         FibonnaciJava fb = new FibonnaciJava();
-        System.out.println(fb.fibbonacci(pos));
+        System.out.println(fb.fibbonacci(pos)); //não posso esquecer que fibonnaci só tem um 'b'
     }
 
     public int fibbonacci(int pos){
