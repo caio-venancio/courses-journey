@@ -4,7 +4,7 @@ Tipo	Algoritmo / Tópico	O que testa
 🔁 Controle de fluxo (Fatorial, Lógica básica e domínio de loops, condicionais e recursão)	
     - [] FizzBuzz <AQUI>,
     - [X] Palíndromo,
-    - [] Fibonacci <AQUI>, 
+    - [X] Fibonacci <AQUI>, 
 🔡 Strings (Manipulação de texto e uso de StringBuilder)
     - [] Reverter string
     - [] contar caracteres<AQUI>
@@ -19,8 +19,9 @@ Tipo	Algoritmo / Tópico	O que testa
 🧠 2. Estruturas de dados (o coração das entrevistas)
 Estrutura	Algoritmos típicos que pedem	O que esperam de você
 Array / List	Rotacionar array <AQUI>, encontrar duplicatas, somar pares, two-sum	Indexação e iteração eficiente
-Stack (Pilha)	Validar parênteses<AQUI>, converter expressões (infixa/pós-fixa)	Entendimento de LIFO e recursão
-Queue (Fila)	Simular fila de atendimento, BFS em grafos	Entendimento de FIFO
+Stack (Pilha)	
+    - [X] Validar parênteses, converter expressões (infixa/pós-fixa)	Entendimento de LIFO e recursão
+Queue (Fila)	Simular fila de atendimento, BFS em grafos <AQUI>,	Entendimento de FIFO
 Linked List	Reverter lista, detectar ciclo (Floyd’s algorithm), merge de listas	Manipulação de ponteiros/referências
 HashMap / Set	Detectar duplicatas, contagem de frequência, anagramas	Uso de tabelas de hash
 Heap / PriorityQueue	k-maiores elementos, mediana de fluxo	Estruturas ordenadas dinamicamente

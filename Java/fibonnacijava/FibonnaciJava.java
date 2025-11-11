@@ -9,10 +9,10 @@ public class FibonnaciJava {
         scanner.close();
 
         FibonnaciJava fb = new FibonnaciJava();
-        System.out.println(fb.fibbonacci(pos)); //não posso esquecer que fibonnaci só tem um 'b'
+        System.out.println(fb.fibonacci(pos)); //não posso esquecer que fibonnaci só tem um 'b'
     }
 
-    public int fibbonacci(int pos){
+    public int fibonacci(int pos){
         if(pos == 0){
             return 0;
         } else if (pos == 1){
@@ -21,6 +21,6 @@ public class FibonnaciJava {
             return 1;
         }
 
-        return fibbonacci(pos-1) + fibbonacci(pos-2);
+        return fibonacci(pos-1) + fibonacci(pos-2);
     }
 }
