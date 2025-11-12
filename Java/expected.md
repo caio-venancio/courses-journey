@@ -18,7 +18,11 @@ Tipo	Algoritmo / Tópico	O que testa
 
 🧠 2. Estruturas de dados (o coração das entrevistas)
 Estrutura	Algoritmos típicos que pedem	O que esperam de você
-Array / List	Rotacionar array <AQUI>, encontrar duplicatas, somar pares, two-sum	Indexação e iteração eficiente
+Array / List (Indexação e iteração eficiente)
+    - [X] Rotacionar array, 
+    - [] encontrar duplicatas<AQUI>
+    - [] somar pares
+    - [] two-sum
 Stack (Pilha)	
     - [X] Validar parênteses, converter expressões (infixa/pós-fixa)	Entendimento de LIFO e recursão
 Queue (Fila)	Simular fila de atendimento, BFS em grafos <AQUI>,	Entendimento de FIFO
