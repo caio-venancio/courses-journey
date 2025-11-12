@@ -20,7 +20,19 @@ public class RotateArray {
         reverse(arr, k, n - 1);
     }
 
-    
+    public static void rotateLeft(int [] arr, int k) {
+        int n = arr.length;
+        // Garante que k está dentro dos limites do array
+        k = k % n;
+
+        if (k == 0) {
+            return; // Nenhuma rotação necessária
+        }
+
+        reverse(arr, 0, k - 1);
+        reverse(arr, k, n - 1);
+        reverse(arr, 0, n - 1);
+    }
 
     private static void reverse(int[] arr, int start, int end) {
         while (start < end) {
@@ -37,6 +49,8 @@ public class RotateArray {
         int k = 2;
         rotateRight(arr, k);
         // Imprime o array rotacionado: {4, 5, 1, 2, 3}
+        System.out.println(java.util.Arrays.toString(arr));
+        rotateLeft(arr, k);
         System.out.println(java.util.Arrays.toString(arr));
     }
 
