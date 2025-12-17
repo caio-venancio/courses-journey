@@ -2,7 +2,7 @@
 const WebSocket = require('ws'); // For ES Modules use 'import WebSocket, { WebSocketServer } from "ws";'
 
 // Creates a new WebSocket connection to the specified URL.
-const socket = new WebSocket('ws://localhost:8080');
+const socket = new WebSocket('ws://localhost:8080'); //localhost hardcoded task: não depender
 
 // Executes when the connection is successfully established.
 socket.addEventListener('open', event => {

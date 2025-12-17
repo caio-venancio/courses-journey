@@ -1,9 +1,10 @@
 - [X] Fazer arquivo de cliente com websocket
-- [] Fazer arquivo de servidor com websocket
+- [X] Fazer arquivo de servidor com websocket
 - [] Fazer arquivo de servidor com log correto
 - [] Fazer arquivo de servidor estável
 - [] Fazer arquivo de servidor sem localhost hardcoded
     Qual a diferença de colocar hardcoded ou com objeto que expõe porta?
+    O que é CommonJS, ES Module (.mjs) e CommonJS explícito (.cjs)?
 - [] Fazer arquivo de servidor com limite de payload
 - [] Fazer arquivo de  servidor com timeout, heartbeat, limite de coneções e rate limite por ip
 - [] Fazer validação de mensagens
