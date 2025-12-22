@@ -1,24 +1,26 @@
 - [X] Adicionar Hello World
-- [X] Express
-- [X] WebSocket
+- [] Express
+- [] WebSocket
 - [] cors
 - [] dotenv
-- [] morgan
-- [] helmet
 - [] bcrypt
 - [] jsonwebtoken
+- [] pg
+- [] multer
+- [] react
+- [] react-router-dom
+- [] axios
+
+Para procurar
+- [] morgan
+- [] helmet
 - [] express-rate-limit
 - [] cookie-parser
-- [] pg
 - [] knex
 - [] sequelize
 - [] mongoose
 - [] redis
-- [] multer
 - [] fetch
-- [] react
-- [] react-router-dom
-- [] axios
 - [] react-hook-form
 - [] zod
 - [] eslint
