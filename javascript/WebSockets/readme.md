@@ -18,16 +18,16 @@
     Tem como tratar a requisição de conexão que passou o limite de payload?
     Tem como receber outros objetos que não seja strings? como eles são medidos em bytes?
 - [] Fazer arquivo de servidor com timeout 
-    - [] Fazer arquivo (e verificar se é possível)
+    - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
 - [] Fazer arquivo de servidor com heartbeat
-    - [] Fazer arquivo (e verificar se é possível)
+    - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
 - [] Fazer arquivo de servidor com limite de conexões
     - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
 - [] Fazer arquivo de servidor com rate limite por ip
-    - [] Fazer arquivo (e verificar se é possível)
+    - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
 - [] Fazer validação de mensagens 
 - [] Testar com PM2 ou systemd
