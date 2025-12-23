@@ -23,13 +23,16 @@
 - [] Fazer arquivo de servidor com heartbeat
     - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
-- [] Fazer arquivo de servidor com limite de conexões
+- [X] Fazer arquivo de servidor com limite de conexões
     - [X] Fazer arquivo (e verificar se é possível)
-    - [] Consertar para execução
+    - [X] Consertar para execução
 - [] Fazer arquivo de servidor com rate limite por ip
     - [X] Fazer arquivo (e verificar se é possível)
     - [] Consertar para execução
 - [] Fazer validação de mensagens 
+- [] Fazer client que pede por mensagem no terminal
+    - [X] Fazer cliente mandar mensagens assíncronas
+    - [] Fazer cliente esperar mensagens do terminal
 - [] Testar com PM2 ou systemd
 
 <!-- https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html -->
