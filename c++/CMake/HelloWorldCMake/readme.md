@@ -1,0 +1,4 @@
+<!-- https://cmake.org/cmake/help/book/mastering-cmake/chapter/Getting%20Started.html -->
+From the command line, the cmake executable can be used to generate a project buildsystem. This is best suited for projects with few or no options. For larger projects like VTK, using ccmake, or the cmake-gui is recommended. To build a project with cmake, first create and change directory to where you want the binaries to be placed. Run cmake specifying the path to the source tree and pass in any options using the -D flag. Unlike ccmake, or the cmake-gui, the configure and generate steps are combined into one when using the cmake executable.
+
+cmake -G "MinGW Makefiles" .
