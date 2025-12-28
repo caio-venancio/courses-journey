@@ -1,0 +1,6 @@
+- [X] Exemplo de async
+- [] Exemplo de await
+- [] Exemplo de Promise.resolve()
+- [X] Criar promise
+- [X] Criar Exemplo de promise 1
+- [] Criar Exemplo de promise 2
