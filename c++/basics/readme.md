@@ -1,0 +1,5 @@
+- [] Trocar para padrão de nome de variável em c++
+- [] definir o que é everytype
+- [] definir o que é everytypeofliteral
+- [] trocar nome de arquivos para padrão de c++
+- [] declarar e popular vetores
