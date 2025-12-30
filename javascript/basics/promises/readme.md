@@ -1,6 +1,9 @@
 - [X] Exemplo de async
-- [] Exemplo de await
+- [X] Exemplo de await
 - [] Exemplo de Promise.resolve()
 - [X] Criar promise
 - [X] Criar Exemplo de promise 1
 - [] Criar Exemplo de promise 2
+- [] Exemplo de await com "Se esse valor não for uma Promise, ele é convertido para uma Promise resolvida."
+- [] Exemplo de await com "Se a Promise for rejeitada, a expressão await invoca uma Exception com o valor rejeitado."
+- [] Exemplo de exception em promise
