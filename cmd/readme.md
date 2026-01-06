@@ -15,3 +15,4 @@
 - [X] Como gerar lista com todas as extensões presentes em um diretório
 - [X] Como gerar lista com as extensões presentes em um diretório
 - [X] Como retirar todas as linhas repetidas em um arquivo .txt?
+- [X] Como encontrar string específica dentro de arquivo?

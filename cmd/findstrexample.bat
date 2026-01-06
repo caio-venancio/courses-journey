@@ -1,0 +1,1 @@
+findstr ".zip" .\cmd\tests\lista_de_extensoes_sem_repetir.txt
