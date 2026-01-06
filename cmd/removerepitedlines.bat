@@ -1,0 +1,1 @@
+sort /UNIQUE .\cmd\tests\lista_de_extensoes_ordenada.txt /OUT .\cmd\tests\novo_arquivo.txt
