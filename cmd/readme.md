@@ -12,3 +12,5 @@
 - [] Comparar se dois arquivos são iguais
 - [] Lista de arquivos cujo nome está em uma pasta em não estão em outra
 - [] Lista de arquivos que estão em uma pasta em não estão em outra
+- [] Como gerar lista com todas as extensões presentes em um diretório
+- [] Como gerar lista com todas as extensões presentes em um diretório
