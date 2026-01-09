@@ -7,6 +7,7 @@
 - [] Listar todos os arquivos excluindo algum diretório
 - [X] Lista de arquivos cujo nome está em uma pasta em não estão em outra
 - [] Lista de arquivos que estão em uma pasta em não estão em outra
+- [] Listar pastas que estão em uma pasta e não estão em outra
 - [X] Listar com todas as extensões presentes em um diretório
 - [X] Listar com as extensões presentes em um diretório
 - [X] Contar arquivos no diretório
@@ -24,3 +25,5 @@
 - [X] Encontrar se arquivo com certo nome está presente no diretório
 - [X] Pegar dois argumentos e printar na tela
 - [] Pegar dois argumentos e verificar se são rotas válidas
+- [] Copiar o arquivo de uma pasta para outra
+- [] Copiar uma pasta de uma pasta para outra
