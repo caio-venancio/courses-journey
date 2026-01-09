@@ -1,1 +1,2 @@
-exiftool "C:\Users\caiov\Documents\Backups diversos\Galaxy Note 10 Data\Backup do J7 neo\Camera do celular antigi\DSC_0122.JPG"
+# Foto original
+exiftool "C:\Users\caiov\Documents\Backups diversos\Galaxy Note 10 Data\Backup do J7 neo\Camera do celular antigi\DSC_0077.JPG"
