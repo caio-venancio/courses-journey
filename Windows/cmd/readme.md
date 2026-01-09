@@ -16,6 +16,7 @@
 - [X] Como gerar lista com as extensões presentes em um diretório
 - [X] Como retirar todas as linhas repetidas em um arquivo .txt?
 - [X] Como encontrar string específica dentro de arquivo?
+- [X] Como encontrar se arquivo com certo nome está presente no diretório
 - [] Contar quantos arquivos de uma extensão tem um diretório
 - [] Comparar se o conteúdo de dois diretórios são iguais
 - [] Pegar dois argumentos e printar na tela
