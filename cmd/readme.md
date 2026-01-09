@@ -9,10 +9,14 @@
 - [X] Contar todos os arquivos a partir do diretório
 - [X] Comparar se dois arquivos tem o mesmo nome
 - [] Comparar se dois arquivos tem o mesmo conteúdo
-- [] Comparar se dois arquivos são iguais
+- [X] Comparar se dois arquivos são iguais
 - [] Lista de arquivos cujo nome está em uma pasta em não estão em outra
 - [] Lista de arquivos que estão em uma pasta em não estão em outra
 - [X] Como gerar lista com todas as extensões presentes em um diretório
 - [X] Como gerar lista com as extensões presentes em um diretório
 - [X] Como retirar todas as linhas repetidas em um arquivo .txt?
 - [X] Como encontrar string específica dentro de arquivo?
+- [] Contar quantos arquivos de uma extensão tem um diretório
+- [] Comparar se o conteúdo de dois diretórios são iguais
+- [] Pegar dois argumentos e printar na tela
+- [X] Comparar se dois diretórios tem os mesmos arquivos

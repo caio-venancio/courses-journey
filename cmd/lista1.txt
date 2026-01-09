@@ -1,0 +1,2 @@
+lista_de_extensoes_ordenada.txt
+lista_de_extensoes_sem_repetir.txt
