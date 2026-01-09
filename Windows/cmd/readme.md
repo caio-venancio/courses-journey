@@ -20,3 +20,4 @@
 - [] Comparar se o conteúdo de dois diretórios são iguais
 - [] Pegar dois argumentos e printar na tela
 - [X] Comparar se dois diretórios tem os mesmos arquivos
+- [] Comparar se dois diretórios tem os mesmos arquivos recursivamente
