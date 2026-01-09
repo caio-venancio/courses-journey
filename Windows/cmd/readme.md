@@ -5,7 +5,7 @@
 - [X] Listar arquivos no diretório
 - [X] Listar todos os arquivos a partir do diretório
 - [] Listar todos os arquivos excluindo algum diretório
-- [] Lista de arquivos cujo nome está em uma pasta em não estão em outra
+- [X] Lista de arquivos cujo nome está em uma pasta em não estão em outra
 - [] Lista de arquivos que estão em uma pasta em não estão em outra
 - [X] Listar com todas as extensões presentes em um diretório
 - [X] Listar com as extensões presentes em um diretório
