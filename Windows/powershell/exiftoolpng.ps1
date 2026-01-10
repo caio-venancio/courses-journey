@@ -1,0 +1,1 @@
+exiftool Windows\tests\real\image.png
