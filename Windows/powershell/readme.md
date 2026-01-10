@@ -9,3 +9,6 @@
 
 Copy-Item
 - [X] Copiar arquivo de um lugar para outro
+
+Remove-Item
+- [X] Apagar todos os arquivos de uma pasta
