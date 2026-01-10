@@ -12,3 +12,7 @@ Copy-Item
 
 Remove-Item
 - [X] Apagar todos os arquivos de uma pasta
+
+Utilidades
+- [S] Copia incremental
+- [] Verifica Backup
