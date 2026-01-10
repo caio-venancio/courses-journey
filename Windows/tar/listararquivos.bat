@@ -2,4 +2,4 @@
 @REM tar -tf arquivo.tar > lista.txt
 
 @REM Exemplo 
-tar -tf "C:/Users/caiov/newbackupnote/DCIM.tar"
+tar -tvf "C:/Users/caiov/newbackupnote/DCIM.tar"
