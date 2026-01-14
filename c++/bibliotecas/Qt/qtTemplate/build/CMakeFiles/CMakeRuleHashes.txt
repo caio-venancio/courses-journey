@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+bebec4ddf533c566da3ad9b4e36eab08 CMakeFiles/QtTemplate_autogen
+bebec4ddf533c566da3ad9b4e36eab08 CMakeFiles/QtTemplate_autogen_timestamp_deps
+cf20fe178979f89812a209cdbcf8ca7d QtTemplate_autogen/timestamp
