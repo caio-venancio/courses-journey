@@ -9,8 +9,8 @@ function parseDate(str) {
   return new Date(year, month, day);
 }
 
-const oldestString = arrayDates.reduce((oldest, current) => {
+const newestString = arrayDates.reduce((oldest, current) => {
   return parseDate(current) < parseDate(oldest) ? current : oldest;
 });
 
-console.log(oldestString);
+console.log(newestString);
