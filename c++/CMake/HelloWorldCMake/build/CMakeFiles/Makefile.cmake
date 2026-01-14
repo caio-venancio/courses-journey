@@ -109,7 +109,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Users/caiov/Programas de uso cotidiano/cmake-3.28.1-windows-x86_64/share/cmake-3.28/Modules/Platform/Windows-windres.cmake"
   "C:/Users/caiov/Programas de uso cotidiano/cmake-3.28.1-windows-x86_64/share/cmake-3.28/Modules/Platform/Windows.cmake"
   "C:/Users/caiov/Programas de uso cotidiano/cmake-3.28.1-windows-x86_64/share/cmake-3.28/Modules/Platform/WindowsPaths.cmake"
-  "C:/Users/caiov/Tecnologia da Informação/Projetos/courses-journey/c++/CMake/HelloWorldCMake/CMakeLists.txt"
+  "C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/HelloWorldCMake/CMakeLists.txt"
   "CMakeFiles/3.28.1/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.28.1/CMakeRCCompiler.cmake"

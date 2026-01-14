@@ -53,10 +53,10 @@ RM = "C:\Users\caiov\Programas de uso cotidiano\cmake-3.28.1-windows-x86_64\bin\
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\caiov\Tecnologia da Informação\Projetos\courses-journey\c++\CMake\HelloWorldCMake"
+CMAKE_SOURCE_DIR = "C:\Users\caiov\Tecnologia da Informacao\Projetos\courses-journey\c++\CMake\HelloWorldCMake"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\caiov\Tecnologia da Informação\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build"
+CMAKE_BINARY_DIR = "C:\Users\caiov\Tecnologia da Informacao\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -80,14 +80,14 @@ clean: CMakeFiles/Hello.dir/clean
 CMakeFiles/Hello.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Hello.dir\build.make CMakeFiles/Hello.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Hello.dir\build.make CMakeFiles/Hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\caiov\Tecnologia da Informação\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" --progress-num=1,2 "Built target Hello"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="C:\Users\caiov\Tecnologia da Informacao\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" --progress-num=1,2 "Built target Hello"
 .PHONY : CMakeFiles/Hello.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Hello.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\caiov\Tecnologia da Informação\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\caiov\Tecnologia da Informacao\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/Hello.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\caiov\Tecnologia da Informação\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\caiov\Tecnologia da Informacao\Projetos\courses-journey\c++\CMake\HelloWorldCMake\build\CMakeFiles" 0
 .PHONY : CMakeFiles/Hello.dir/rule
 
 # Convenience name for target.
