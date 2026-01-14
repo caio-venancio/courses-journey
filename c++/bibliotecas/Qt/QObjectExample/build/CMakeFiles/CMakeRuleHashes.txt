@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+94d0fcd013f9ea440612f3d2eb2dcad0 CMakeFiles/QObjectExample_autogen
+94d0fcd013f9ea440612f3d2eb2dcad0 CMakeFiles/QObjectExample_autogen_timestamp_deps
+b5f47c7565c40f0f0cced18407d3ea49 QObjectExample_autogen/timestamp
