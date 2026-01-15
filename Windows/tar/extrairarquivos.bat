@@ -5,4 +5,4 @@
 @REM Para arquivos compactados (ex: .tar.gz): Adicione a opção -z (gzip) ou -j (bzip2). Ex: tar -xzvf arquivo.tar.gz -C /destino.
 
 @REM Exemplo
-tar -xvf "C:\Users\caiov\newbackupnote\DCIM.tar" -C "C:\Users\caiov\Documents\Backups diversos\newnoteDCIM"
+tar -xvf "C:\Users\user\newbackupnote\Music.tar" -C "C:\Users\user\Documents\Backups diversos\audio note"

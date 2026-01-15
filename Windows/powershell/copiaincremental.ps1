@@ -1,3 +1,4 @@
+# copiaincremental.ps1
 $origem        = "Windows\tests\real"
 $backup        = "Windows\tests\vazio"
 $novos         = "Windows/tests/resultado"

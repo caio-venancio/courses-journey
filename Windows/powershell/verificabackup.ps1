@@ -1,6 +1,8 @@
 # Verifica se todo arquivo na pasta A está na pasta B
-$pastaA = "Windows\tests\real"
-$pastaB = "Windows\tests\realestrutura"
+# $pastaA = "Windows\tests\real"
+$pastaA = "C:\Users\user\Documents\Backups diversos\audio note\audio"
+# $pastaB = "Windows\tests\realestrutura"
+$pastaB = "C:\Users\user\Music\Audio"
 
 # Estrutura eficiente para comparação
 $hashesB = [System.Collections.Generic.HashSet[string]]::new()
