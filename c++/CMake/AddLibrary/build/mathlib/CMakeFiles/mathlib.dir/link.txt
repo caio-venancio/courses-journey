@@ -1,0 +1,2 @@
+C:\Qt\Tools\mingw1310_64\bin\ar.exe qc libmathlib.a CMakeFiles/mathlib.dir/math_utils.cpp.obj
+C:\Qt\Tools\mingw1310_64\bin\ranlib.exe libmathlib.a

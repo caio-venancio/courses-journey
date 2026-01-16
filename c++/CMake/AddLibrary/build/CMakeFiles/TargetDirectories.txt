@@ -1,0 +1,8 @@
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/CMakeFiles/edit_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/CMakeFiles/rebuild_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/mathlib/CMakeFiles/mathlib.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/mathlib/CMakeFiles/edit_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/mathlib/CMakeFiles/rebuild_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/app/CMakeFiles/app.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/app/CMakeFiles/edit_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/CMake/AddLibrary/build/app/CMakeFiles/rebuild_cache.dir
