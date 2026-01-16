@@ -1,0 +1,1 @@
+objectNameChanged(const QString &name)
