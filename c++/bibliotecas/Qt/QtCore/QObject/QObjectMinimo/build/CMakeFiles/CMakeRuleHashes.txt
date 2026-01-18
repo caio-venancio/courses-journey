@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+aa5fa6f2b23beb8054c9e35b6e8e8cbd CMakeFiles/QObjectMinimo_autogen
+aa5fa6f2b23beb8054c9e35b6e8e8cbd CMakeFiles/QObjectMinimo_autogen_timestamp_deps
+47d76e406cea384f4ff94d436557158c QObjectMinimo_autogen/timestamp

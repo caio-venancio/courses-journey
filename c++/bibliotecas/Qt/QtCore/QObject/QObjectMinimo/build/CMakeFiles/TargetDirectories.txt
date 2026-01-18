@@ -1,0 +1,5 @@
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/bibliotecas/Qt/QtCore/QObject/QObjectMinimo/build/CMakeFiles/QObjectMinimo.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/bibliotecas/Qt/QtCore/QObject/QObjectMinimo/build/CMakeFiles/edit_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/bibliotecas/Qt/QtCore/QObject/QObjectMinimo/build/CMakeFiles/rebuild_cache.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/bibliotecas/Qt/QtCore/QObject/QObjectMinimo/build/CMakeFiles/QObjectMinimo_autogen_timestamp_deps.dir
+C:/Users/caiov/Tecnologia da Informacao/Projetos/courses-journey/c++/bibliotecas/Qt/QtCore/QObject/QObjectMinimo/build/CMakeFiles/QObjectMinimo_autogen.dir
