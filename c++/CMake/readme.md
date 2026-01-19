@@ -29,3 +29,14 @@ O que é um target?
 Para quê serve target_sources?
     Boa pergunta — target_sources() costuma confundir mesmo, porque à primeira vista parece redundante com add_executable() e add_library().
     target_sources() serve para associar arquivos-fonte a um target já existente, de forma modular, incremental e com controle de escopo.
+
+Como usar uma biblioteca buildada?
+como o cmake pega a biblioteca que eu preciso (como fmt/core.h) automaticamente?
+    Porque você linkou contra um target (fmt::fmt), não contra arquivos soltos.
+O que find_package() faz?
+    pega Biblioteca pré-buildada
+Qual a diferença de bibliotecas pré-buildadas daquelas que buildam junto com minha aplicação?
+Como o CMake especifica onde vai ficar o executável?
+Qual o resultado de uma build de biblioteca?
+Como exportar um target nomeado?
+O que é uma build estática, compartilhada e header-only?
