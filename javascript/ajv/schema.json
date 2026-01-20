@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "nome": { "type": "string", "minLength": 3 },
+    "idade": { "type": "integer", "minimum": 0 },
+    "email": { "type": "string", "format": "email" }
+  },
+  "required": ["nome", "idade"]
+}
