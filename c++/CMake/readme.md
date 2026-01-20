@@ -43,3 +43,4 @@ O que é uma build estática, compartilhada e header-only?
 
 Em casos devo usar tanto add_subdirectory, quanto add_library, quanto target_link_libraries?
 Como CMake facilita isso em vez de usar g++ diretamente?
+O CMake faz em duas etapas?
