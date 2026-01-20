@@ -40,3 +40,6 @@ Como o CMake especifica onde vai ficar o executável?
 Qual o resultado de uma build de biblioteca?
 Como exportar um target nomeado?
 O que é uma build estática, compartilhada e header-only?
+
+Em casos devo usar tanto add_subdirectory, quanto add_library, quanto target_link_libraries?
+Como CMake facilita isso em vez de usar g++ diretamente?
