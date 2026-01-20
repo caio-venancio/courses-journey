@@ -29,6 +29,7 @@
     - [] Fazer arquivo de servidor com rate limite por ip
         - [X] Fazer arquivo (e verificar se é possível)
         - [] Consertar para execução
+    - [X] Fazer rate limit por conexão
     - [] Fazer validação de mensagens 
 - [] Fazer client que pede por mensagem no terminal
     - [X] Fazer cliente mandar mensagens assíncronas
