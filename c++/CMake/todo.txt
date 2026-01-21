@@ -1,0 +1,36 @@
+Top comandos 20 CMAKE
+
+Comandos Estruturais e de Projeto
+    cmake_minimum_required(VERSION ...): Define a versão mínima do CMake necessária, garantindo compatibilidade.
+    project(nome VERSION ... LANGUAGES ...): Define o nome do projeto, versão e linguagens (CXX, C, etc.).
+    add_subdirectory(diretorio): Adiciona subdiretórios que contêm seus próprios CMakeLists.txt. 
+    
+Definição de Alvos (Targets)
+    add_executable(nome_alvo source1.cpp ...): Cria um executável a partir dos arquivos de código fonte.
+    add_library(nome_alvo [STATIC|SHARED] source1.cpp ...): Cria uma biblioteca (estática ou compartilhada).
+    add_custom_target(...): Cria um alvo personalizado que não produz um arquivo de saída direto (ex: documentação).
+
+Dependências e Vínculos (Modern CMake)
+    target_link_libraries(alvo PRIVATE|PUBLIC ...): Vincula bibliotecas a um alvo (executável ou biblioteca).
+    target_include_directories(alvo PRIVATE|PUBLIC ...): Define os caminhos de diretórios de include para um alvo.
+    target_compile_definitions(alvo PRIVATE|PUBLIC ...): Define macros de pré-processador para um alvo.
+    target_compile_options(alvo PRIVATE|PUBLIC ...): Adiciona opções específicas de compilação (flags).
+    target_sources(alvo PRIVATE|PUBLIC ...): Adiciona arquivos de código fonte a um alvo. 
+
+Gerenciamento de Pacotes e Arquivos
+    find_package(pacote REQUIRED): Localiza e carrega configurações de bibliotecas externas.
+    find_library(...): Procura por uma biblioteca específica.
+    include(arquivo): Inclui instruções de outro arquivo CMake.
+    file(GLOB var "expressao"): Procura arquivos baseados em padrões (ex: *.cpp).
+    configure_file(in out): Copia um arquivo e substitui valores de variáveis (comum para config.h).
+
+Variáveis e Controle
+    set(VAR valor): Define uma variável no CMake.
+    option(OPCAO "Descricao" [ON|OFF]): Define uma opção booleana configurável pelo usuário.
+    if(condicao) ... endif(): Estrutura condicional para compilação.
+    message([STATUS|WARNING|FATAL_ERROR] "texto"): Exibe mensagens durante a configuração (status ou erros).
+
+Variáveis Comuns de Ambiente
+    ${CMAKE_SOURCE_DIR}: Raiz do diretório de código-fonte.
+    ${CMAKE_BINARY_DIR}: Raiz do diretório de build.
+    ${PROJECT_NAME}: Nome do projeto definido por project(). 
