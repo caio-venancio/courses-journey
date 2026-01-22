@@ -30,7 +30,7 @@
         - [X] Fazer arquivo (e verificar se é possível)
         - [] Consertar para execução
     - [X] Fazer rate limit por conexão
-    - [] Fazer validação de mensagens 
+    - [X] Fazer validação de mensagens 
 - [] Fazer client que pede por mensagem no terminal
     - [X] Fazer cliente mandar mensagens assíncronas
     - [] Fazer cliente esperar mensagens do terminal
