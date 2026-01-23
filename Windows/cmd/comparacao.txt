@@ -1,7 +1,0 @@
-Comparando os arquivos CMD\lista1.txt e CMD\LISTA2.TXT
-***** CMD\lista1.txt
-lista_de_extensoes_ordenada.txt
-lista_de_extensoes_sem_repetir.txt
-***** CMD\LISTA2.TXT
-*****
-

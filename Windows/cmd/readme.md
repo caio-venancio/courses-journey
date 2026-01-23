@@ -27,3 +27,10 @@
 - [] Pegar dois argumentos e verificar se são rotas válidas
 - [] Copiar o arquivo de uma pasta para outra
 - [] Copiar uma pasta de uma pasta para outra
+
+<!-- Para consertar variáveis de ambiente -->
+- [X] Mostrar path
+- [X] Mostrar path em lista
+- [X] Procura onde resolve comando
+- [] Mexe no path
+- [] Troca um path pelo outro
