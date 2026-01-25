@@ -14,5 +14,8 @@ Remove-Item
 - [X] Apagar todos os arquivos de uma pasta
 
 Utilidades
-- [S] Copia incremental
-- [] Verifica Backup
+- [X] Copia incremental
+- [X] Verifica Backup
+
+File management
+- [X] Criar 100 arquivos aleatórios em algum diretório
