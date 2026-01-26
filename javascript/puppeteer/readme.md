@@ -1,0 +1,2 @@
+- [] Fazer algoritmo que verifica mudança de site simples (no documento)
+- [X] Pega documento de site
