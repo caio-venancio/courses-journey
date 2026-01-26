@@ -3,3 +3,9 @@ node_modules/
 
 # cmake
 build/
+
+# variáveis de ambiente
+env
+.env
+venv
+.venv
