@@ -21,7 +21,8 @@ Bom (Baixo acoplamento): Pedido depende de uma interface IDatabase. Assim, você
 Resumo
 
 Característica	Dependência (Acoplamento)
-Normal?	Sim, todo sistema complexo possui.
-Bom?	Sim, se for baixo/fraco (interfases).
-Ruim?	Sim, se for alto/forte (classes concretas amarradas).
+Normal?	        Sim, todo sistema complexo possui.
+Bom?	        Sim, se for baixo/fraco (interfases).
+Ruim?	         Sim, se for alto/forte (classes concretas amarradas).
+
 Em resumo: É essencial ter dependências, mas o ideal é que elas sejam "fracas", permitindo que você troque as peças sem quebrar o sistema todo.
