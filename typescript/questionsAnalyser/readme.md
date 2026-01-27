@@ -39,3 +39,5 @@ index (SQLite / memória)
 search
    ↓
 CLI / Obsidian
+
+- [] o que a camada models geralmente faz?
