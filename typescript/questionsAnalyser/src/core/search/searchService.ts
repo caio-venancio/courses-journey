@@ -1,6 +1,6 @@
-import { IndexStore } from "../index/IndexStore";
-import { SearchQuery } from "../models/searchQuery";
-import { SearchResult } from "../models/searchResult";
+import type { IndexStore } from "../index/indexStore";
+import type { SearchQuery } from "../models/searchQuery";
+import type { SearchResult } from "../models/searchResult";
 
 export class SearchService {
   constructor(private index: IndexStore) {}

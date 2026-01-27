@@ -1,4 +1,4 @@
-import { Document } from "../models/document";
+import type { Document } from "../models/document";
 
 export interface IndexStore {
   save(doc: Document): void;

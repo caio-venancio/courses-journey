@@ -17,5 +17,6 @@ Utilidades
 - [X] Copia incremental
 - [X] Verifica Backup
 
-File management
+File management tests
 - [X] Criar 100 arquivos aleatórios em algum diretório
+- [] Crar comando de misturar copias de arquivos e novos arquivos para um novo diretório

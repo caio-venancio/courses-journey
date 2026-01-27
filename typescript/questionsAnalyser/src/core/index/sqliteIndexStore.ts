@@ -1,6 +1,6 @@
 import Database from "better-sqlite3";
-import { Document } from "../models/Document";
-import { IndexStore } from "./IndexStore";
+import type { Document } from "../models/document";
+import type { IndexStore } from "./indexStore";
 
 export class SqliteIndexStore implements IndexStore {
   private db = new Database("index.db");
@@ -27,7 +27,7 @@ export class SqliteIndexStore implements IndexStore {
     return this.db.prepare(`
       SELECT * FROM documents
       WHERE content LIKE ?
-    `).all(`%${query}%`);
+    `).all(`%${query}%`) as Document[];
   }
 
   clear(): void {

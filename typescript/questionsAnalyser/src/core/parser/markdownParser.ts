@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import { Document } from "../../src/core/models/document";
+import type { Document } from "../models/document";
 import { randomUUID } from "crypto";
 
 export class MarkdownParser {
