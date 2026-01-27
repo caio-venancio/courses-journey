@@ -1,4 +1,4 @@
-import { NodeFileProvider } from './nodeFileProvider';
+import { NodeFileProvider } from './nodeFileProvider.js';
 
 // Ponto de entrada do programa em CLI
 const fileProvider = new NodeFileProvider();

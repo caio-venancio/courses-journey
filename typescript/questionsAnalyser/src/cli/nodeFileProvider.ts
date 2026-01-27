@@ -1,4 +1,4 @@
-import { FileProvider } from "../core/parser/FileProvider";
+import type { FileProvider } from "../core/parser/fileProvider.js";
 import { readFile } from "fs/promises";
 import fg from "fast-glob";
 

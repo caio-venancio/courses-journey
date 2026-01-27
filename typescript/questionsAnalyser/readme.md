@@ -1,5 +1,9 @@
 <!-- uk english is great -->
 
+Como rodar?
+
+`node --loader ts-node/esm src/cli/index.ts` ou `npm run dev`
+
 1. Escrevi as pastas de arquitetura
 
 Requisitos:
@@ -42,3 +46,7 @@ CLI / Obsidian
 
 - [] o que a camada models geralmente faz?
 - [] como rodar projeto em typescript?
+- [] O que ts-node/esm faz?
+   Usando o loader ts-node/esm para:
+      Suportar ES Modules
+      Compilar TS em tempo de execução
