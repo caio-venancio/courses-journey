@@ -1,0 +1,28 @@
+// FileProvider e MarkdownParser
+- [] Encontra pasta de nome docs (set)
+- [] mostra lista de pasta de exercícios
+- [] Conta quantos arquivos tem
+- [] Conta quantos exercícios tem
+- [] Conta quantos links tem
+- [] Conta quantos arquivos em cada padrão
+- [] Verifica se tem arquivos em padrão nenhum
+
+// IndexStore e SearchService
+- [] Verifica se há novos exercícios
+- [] Coloca novos exercícios
+- [] Mostra quantos exercícios tem no banco
+- [] Ver quantas questões já respondi de uma disciplina
+- [] Ver quantas questões já respondi de um conteúdo
+- [] Ver quantos capítulos tem em um conteúdo
+- [] Ver quantas questões tem de uma disciplina
+- [] Ver quantas questões tem de um conteúdo
+- [] Ver quantas questões tem de um capítulo
+- [] Exporta questões de um conteúdo
+- [] Exporta questões de uma disciplina
+- [] Exporta questões de um um capítulo
+
+// Futuro
+- [] Avaliação pessoal de se questão consegue resumir o conteúdo
+- [] Lista de pontos importantes do conteúdo
+- [] Nota naquele conteúdo em uma prova
+- [] Nota naquele conteúdo em x provas

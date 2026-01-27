@@ -50,3 +50,9 @@ CLI / Obsidian
    Usando o loader ts-node/esm para:
       Suportar ES Modules
       Compilar TS em tempo de execução
+- [x] Como atravessar um objeto e printar todos os valores de chaves com algum nome?
+   Object.entries(usuario).forEach(([chave, valor]) => {
+      if (chave.includes("nome")) {
+         console.log(`Chave: ${chave}, Valor: ${valor}`);
+      }
+   });
