@@ -1,0 +1,3 @@
+	O que muda de workbench para outro no freecad?	
+		Mudar de workbench (bancada de trabalho) no FreeCAD altera principalmente o conjunto de ferramentas, barras de comando e ícones disponíveis na interface para focar em uma tarefa específica. Enquanto o objeto 3D permanece o mesmo, a bancada define se você irá desenhar em 2D (Sketcher), modelar peças sólidas (Part Design), criar arquitetura (BIM) ou gerar desenhos técnicos (TechDraw). 
+		///conjunto de ferramentas, barras de comando e ícones disponíveis na interface
