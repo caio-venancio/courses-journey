@@ -1,5 +1,7 @@
 // FileProvider e MarkdownParser
-- [] Encontra pasta de nome docs (set)
+- [] define pasta de nome <nome> como pasta de procura
+    - [] Verifica se há configuração
+        - [] configura
 - [] mostra lista de pasta de exercícios
 - [] Conta quantos arquivos tem
 - [] Conta quantos exercícios tem

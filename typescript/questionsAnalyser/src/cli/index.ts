@@ -3,6 +3,29 @@ import { MarkdownParser } from '../core/parser/markdownParser.js';
 import { SqliteIndexStore } from '../core/index/sqliteIndexStore.js';
 import { Indexer } from '../core/indexer.js'
 import { SearchService } from '../core/search/searchService.js';
+import { checkConfig, checkDirectoryPath, saveConfig } from './nodeConfigService.js';
+import { createInterface } from 'node:readline'
+import { exit } from 'node:process';
+
+const rl = createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+const perguntar = (query: string) => new Promise((resolve) => rl.question(query, resolve));
+
+if (!checkConfig()){
+    const answer = await perguntar('Qual diretório de homedir deseja colocar seus estudos? ');// tem que checar a segurança por ser entrada de usuário
+    console.log(`Testando o diretório ${answer}...`);
+    if(checkDirectoryPath(answer as string)){ //tem que mandar caminho completo kkk //tem que verificar tipo depois
+        console.log('Sucesso, vamos configurar com esse caminho.')
+        saveConfig(answer as string); //tem que verificar tipo depois
+    } else {
+        console.log('Não foi possível conferir este diretório, tente novamente.')
+        exit(0)
+    }
+}
+rl.close(); 
 
 // Ponto de entrada do programa em CLI
 const fileProvider = new NodeFileProvider();
