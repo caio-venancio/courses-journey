@@ -25,6 +25,17 @@ if (!checkConfig()){
         exit(0)
     }
 }
+
+const perguntaDaInterface: string = `
+    O que deseja realizar?
+    Sair do programa - 0
+    Mostrar qual pasta está configurada - 1
+`
+
+let answer = 1;
+while(answer != 0){
+    answer  = await perguntar(perguntaDaInterface) as number //continuar daqui
+}
 rl.close(); 
 
 // Ponto de entrada do programa em CLI
