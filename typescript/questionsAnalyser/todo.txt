@@ -2,7 +2,7 @@
 - [X] define pasta de nome <nome> como pasta de procura
     - [X] Verifica se há configuração
         - [X] configura
-- [] Printa na tela qual é a pasta configurada se quiser
+- [X] Printa na tela qual é a pasta configurada se quiser
     - [X] menu básico de ações
 - [] mostra lista de pasta de exercícios
 - [] Conta quantos arquivos tem

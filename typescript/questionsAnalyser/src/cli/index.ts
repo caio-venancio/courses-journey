@@ -3,7 +3,7 @@ import { MarkdownParser } from '../core/parser/markdownParser.js';
 import { SqliteIndexStore } from '../core/index/sqliteIndexStore.js';
 import { Indexer } from '../core/indexer.js'
 import { SearchService } from '../core/search/searchService.js';
-import { checkConfig, checkDirectoryPath, saveConfig } from './nodeConfigService.js';
+import { checkConfig, checkDirectoryPath, saveConfig, getConfig } from './nodeConfigService.js';
 import { createInterface } from 'node:readline'
 import { exit } from 'node:process';
 
@@ -34,7 +34,11 @@ const perguntaDaInterface: string = `
 
 let answer = 1;
 while(answer != 0){
-    answer  = await perguntar(perguntaDaInterface) as number //continuar daqui
+    answer  = await perguntar(perguntaDaInterface) as number
+
+    if(answer == 1){
+        console.log("Configuração para pasta C:/Users/user/" + getConfig()?.targetFolder)
+    }
 }
 rl.close(); 
 
