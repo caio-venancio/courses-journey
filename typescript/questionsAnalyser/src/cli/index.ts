@@ -1,3 +1,4 @@
+import * as os from 'os';
 import { NodeFileProvider } from './nodeFileProvider.js';
 import { MarkdownParser } from '../core/parser/markdownParser.js';
 import { SqliteIndexStore } from '../core/index/sqliteIndexStore.js';
@@ -30,41 +31,48 @@ const perguntaDaInterface: string = `
     O que deseja realizar?
     Sair do programa - 0
     Mostrar qual pasta está configurada - 1
+    Mostrar quais arquivos foram detectados - 2
 `
+
+const fileProvider = new NodeFileProvider();
 
 let answer = 1;
 while(answer != 0){
     answer  = await perguntar(perguntaDaInterface) as number
 
     if(answer == 1){
-        console.log("Configuração para pasta C:/Users/user/" + getConfig()?.targetFolder)
+        console.log("Configuração para pasta", os.homedir() + '\\' + getConfig()?.targetFolder)
+    }
+
+    if(answer == 2){
+        let list = await fileProvider.listMarkdownFiles()
+        console.log("Lista de markdown:", list)
     }
 }
 rl.close(); 
 
 // Ponto de entrada do programa em CLI
-const fileProvider = new NodeFileProvider();
 // console.log("fileProvider:", fileProvider);
 // console.log("Versão elegante do fileProvider:", JSON.parse(JSON.stringify(fileProvider)));
 
-const parser = new MarkdownParser();
+// const parser = new MarkdownParser();
 // console.log("parser:", parser);
 // console.log("Versão elegante do parser:", JSON.parse(JSON.stringify(parser)));
 
-const indexStore = new SqliteIndexStore();
+// const indexStore = new SqliteIndexStore();
 // console.log("indexStore:", indexStore);
 // console.log("Versão elegante do indexStore:", JSON.parse(JSON.stringify(indexStore)));
 
-const indexer = new Indexer(fileProvider, parser, indexStore);
+// const indexer = new Indexer(fileProvider, parser, indexStore);
 // console.log("Indexer:", indexer);
 // console.log("Versão elegante do Indexer:", JSON.parse(JSON.stringify(indexer)));
-await indexer.run();
+// await indexer.run();
 
-const searchService = new SearchService(indexStore);
+// const searchService = new SearchService(indexStore);
 // console.log("searchService:", searchService);
 // console.log("Versão elegante do searchService:", JSON.parse(JSON.stringify(searchService)));
 
-const results = searchService.search({ text: "maclaurin" });
+// const results = searchService.search({ text: "maclaurin" });
 // console.log("results:", results[0]);
 // console.log("Versão elegante do results:", JSON.parse(JSON.stringify(results)));
 
@@ -78,4 +86,6 @@ const results = searchService.search({ text: "maclaurin" });
 //         })
 //    });
 
-console.log("arquivos markdown encontrados:", await fileProvider.listMarkdownFiles())
+// console.log("arquivos markdown encontrados:", await fileProvider.listMarkdownFiles())
+
+console.log("Thank you very much!")

@@ -4,7 +4,8 @@
         - [X] configura
 - [X] Printa na tela qual é a pasta configurada se quiser
     - [X] menu básico de ações
-- [] mostra lista de pasta de exercícios
+- [X] mostra lista de pasta de exercícios
+    - [X] Fazer ele reconhecer configuração
 - [] Conta quantos arquivos tem
 - [] Conta quantos exercícios tem
 - [] Conta quantos links tem
