@@ -7,6 +7,7 @@ import { SearchService } from '../core/search/searchService.js';
 import { checkConfig, checkDirectoryPath, saveConfig, getConfig } from './nodeConfigService.js';
 import { createInterface } from 'node:readline'
 import { exit } from 'node:process';
+import { DocumentValidator } from '../core/parser/documentValidator.js';
 
 const rl = createInterface({
   input: process.stdin,
@@ -32,9 +33,12 @@ const perguntaDaInterface: string = `
     Sair do programa - 0
     Mostrar qual pasta está configurada - 1
     Mostrar quais arquivos foram detectados - 2
+    Verificar se há arquivos no padrão errado - 3
+    Contar quantos arquivos de cada padrão tem - 4
 `
 
 const fileProvider = new NodeFileProvider();
+const documentValidador = new DocumentValidator(fileProvider)
 
 let answer = 1;
 while(answer != 0){
@@ -47,6 +51,14 @@ while(answer != 0){
     if(answer == 2){
         let list = await fileProvider.listMarkdownFiles()
         console.log("Lista de markdown:", list)
+    }
+
+    if(answer == 3){
+        let badFormat = documentValidador.verifyTitles()
+    }
+
+    if(answer == 4){
+        console.log("Brincadeiera, ainda não foi implementado kk")
     }
 }
 rl.close(); 
