@@ -33,6 +33,7 @@ const perguntaDaInterface: string = `
     Sair do programa - 0
     Mostrar qual pasta está configurada - 1
     Mostrar quais arquivos foram detectados - 2
+    Mostrar todas as questões detectadas - 5
     Verificar se há arquivos no padrão errado - 3
     Contar quantos arquivos de cada padrão tem - 4
 `
@@ -59,6 +60,10 @@ while(answer != 0){
 
     if(answer == 4){
         console.log("Brincadeiera, ainda não foi implementado kk")
+    }
+
+    if(answer == 5){
+        let response = documentValidador.onlyQuestionsTitle()
     }
 }
 rl.close(); 

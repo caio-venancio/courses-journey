@@ -14,6 +14,8 @@
     - [X] Reconhece padrões
 - [] Fazer MarkdownParser de acordo com padrões 🌟
     - [] Fazer identificador de padrão (recebe arquivo e retorna padrão)
+        - [] Fazer modelagem de dados
+        - [X] Fazer documentValidator retornar as funções
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟

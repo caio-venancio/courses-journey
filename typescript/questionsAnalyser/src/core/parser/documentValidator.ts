@@ -93,7 +93,25 @@ export class DocumentValidator {
   }
 
   async verifyOneFile(path: string): Promise<string> {
-
     return "Não foi possível verificar o arquivo."
+  }
+
+  async onlyQuestionsTitle(): Promise<string[]>{
+    const response = []
+    const files = await this.fileProvider.listMarkdownFiles();
+    for(const path of files){
+      try {
+        const filename = this.fileProvider.filenameOnly(path)
+        let isQuestion = this.titleQuestionPattern.test(filename)
+        if(isQuestion){
+          response.push(path)
+        }
+      } catch(err){
+        console.warn(`Falha ao retornar as questões ${path}`, err)
+      }
+    }
+
+    console.log("Essas são as questões detectadas:", response)
+    return response
   }
 }

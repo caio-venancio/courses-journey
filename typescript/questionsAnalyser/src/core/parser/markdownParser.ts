@@ -3,6 +3,8 @@ import type { Document } from "../models/document";
 import { randomUUID } from "crypto";
 
 export class MarkdownParser {
+
+
   parse(content: string, path: string): Document {
     const { data, content: body } = matter(content);
 
@@ -17,4 +19,6 @@ export class MarkdownParser {
       tags: data.tags ?? []
     };
   }
+
+  parseQuestion(){}
 }
