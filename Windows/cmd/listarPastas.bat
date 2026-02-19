@@ -2,9 +2,16 @@
 setlocal enabledelayedexpansion
 
 set "ROOT=C:"
+set "DEST=D:"
 
 if not exist "%ROOT%" (
     echo Caminho inválido.
+    pause
+    exit /b
+)
+
+if not exist "%DEST%" (
+    echo Caminho de destino inválido.
     pause
     exit /b
 )
@@ -15,7 +22,7 @@ for /d %%D in ("%ROOT%\*") do (
 
     dir /b /s /a-d "%%D" > "%ROOT%\!FOLDER_NAME!.tmp"
 
-    > "%ROOT%\!FOLDER_NAME!.txt" (
+    > "%DEST%\!FOLDER_NAME!.txt" (
         for /f "usebackq delims=" %%F in ("%ROOT%\!FOLDER_NAME!.tmp") do (
             echo %%~nxF
         )

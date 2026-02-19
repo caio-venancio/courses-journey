@@ -1,0 +1,11 @@
+element.sh
+insert_data.sh
+number_guess.sh
+number_guess.sql
+periodic_table.sql
+queries.sh
+salon.sh
+salon.sql
+students.sql
+universe.sql
+worldcup.sql
