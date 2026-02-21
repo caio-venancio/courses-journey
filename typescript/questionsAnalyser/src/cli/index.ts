@@ -36,14 +36,16 @@ const perguntaDaInterface: string = `
     Mostrar todas as questões detectadas - 5
     Verificar se há arquivos no padrão errado - 3
     Contar quantos arquivos de cada padrão tem - 4
+    Formatar uma questão para exemplo - 6
 `
 
 const fileProvider = new NodeFileProvider();
 const documentValidador = new DocumentValidator(fileProvider)
+const markdownParser = new MarkdownParser()
 
 let answer = 1;
 while(answer != 0){
-    answer  = await perguntar(perguntaDaInterface) as number
+    answer = await perguntar(perguntaDaInterface) as number
 
     if(answer == 1){
         console.log("Configuração para pasta", os.homedir() + '\\' + getConfig()?.targetFolder)
@@ -64,6 +66,20 @@ while(answer != 0){
 
     if(answer == 5){
         let response = documentValidador.onlyQuestionsTitle()
+        console.log("Essas são as questões detectadas:", await response)
+    }
+
+    if(answer == 6){
+        let response = await documentValidador.onlyQuestionsTitle()
+        if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedQuestion = await markdownParser.parseQuestion(content, filename)
+
+            console.log("MarkdownParser.parseQuestion():", parsedQuestion)
+        } else{
+            console.log("Response em 6 falhou.")
+        }
     }
 }
 rl.close(); 

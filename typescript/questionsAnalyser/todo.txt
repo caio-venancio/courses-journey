@@ -13,12 +13,13 @@
 - [X] Verifica se tem arquivos em padrão nenhum 🌟
     - [X] Reconhece padrões
 - [] Fazer MarkdownParser de acordo com padrões 🌟
-    - [] Fazer identificador de padrão (recebe arquivo e retorna padrão)
-        - [] Fazer modelagem de dados
-            - [] De acordo com requisitos
+    - [X] Fazer identificador de padrão (recebe arquivo e retorna padrão)
+        - [X] Fazer modelagem de dados
+            - [X] De acordo com requisitos
             - [:b] Verificar normalização
             - [:b] Verificar tipo de dados
         - [X] Fazer documentValidator retornar as funções
+- [] Fazer um limpador de texto
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟

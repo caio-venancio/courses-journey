@@ -111,7 +111,7 @@ export class DocumentValidator {
       }
     }
 
-    console.log("Essas são as questões detectadas:", response)
+    
     return response
   }
 }

@@ -10,23 +10,23 @@ export interface Document {
 }
 
 export interface Question {
-  id: string;
   // path: string;
   title: string;
   question: string;
   answer?: string;
-  livro?: string;
-  capitulo?: string;
-  area?: string[];
-  conteudo?: string[];
+  bookId?: string;
+  chapter?: number | null;
+  areas?: string[];
+  subjects?: string[];
   topic?: string[];
   rank?: number[];
   hasDocument?: boolean;
 }
 
 export interface Book {
-  id: string;
   title: string;
+  edition?: number;
+  authors?: string[];
   chapters?: string[];
   area?: string[];
   conteudo?: string[];
@@ -35,7 +35,6 @@ export interface Book {
 }
 
 export interface Chapter {
-  id: string;
   title: string;
   activities?: string[];
   area?: string[];
