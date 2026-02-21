@@ -15,6 +15,9 @@
 - [] Fazer MarkdownParser de acordo com padrões 🌟
     - [] Fazer identificador de padrão (recebe arquivo e retorna padrão)
         - [] Fazer modelagem de dados
+            - [] De acordo com requisitos
+            - [:b] Verificar normalização
+            - [:b] Verificar tipo de dados
         - [X] Fazer documentValidator retornar as funções
 
 // IndexStore e SearchService
@@ -32,6 +35,7 @@
 - [] Exporta questões de um um capítulo 🌟
 
 // Futuro
+- [] Rank de questões no capítulo, no livro, no conteúdo e etc.
 - [] Avaliação pessoal de se questão consegue resumir o conteúdo
 - [] Lista de pontos importantes do conteúdo
 - [] Nota naquele conteúdo em uma prova
