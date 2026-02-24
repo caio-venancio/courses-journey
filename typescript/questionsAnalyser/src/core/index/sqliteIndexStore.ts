@@ -33,4 +33,9 @@ export class SqliteIndexStore implements IndexStore {
   clear(): void {
     this.db.exec("DELETE FROM documents");
   }
+
+  check(): void {
+    const schema = this.db.prepare("SELECT sql FROM sqlite_master WHERE type='table'").all();
+    console.log(JSON.stringify(schema, null, 2))
+  }
 }

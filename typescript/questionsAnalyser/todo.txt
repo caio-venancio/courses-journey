@@ -13,17 +13,23 @@
 - [X] Verifica se tem arquivos em padrão nenhum 🌟
     - [X] Reconhece padrões
 - [] Fazer MarkdownParser de acordo com padrões 🌟
-    - [X] Fazer identificador de padrão (recebe arquivo e retorna padrão)
+    - [X] Fazer identificador de padrão (recebe arquivo e retorna padrão para exercícios)
         - [X] Fazer modelagem de dados
             - [X] De acordo com requisitos
             - [:b] Verificar normalização
             - [:b] Verificar tipo de dados
         - [X] Fazer documentValidator retornar as funções
+    - [] Fazer identificador de padrão para todos os tipos de documento
 - [] Fazer um limpador de texto
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟
+    - [] Fazer criador de banco de dados
+        - [] Fazer verificador do estado atual do banco de dados
+            - [X] printar ddl
+            - [] printar dml e dcl
 - [] Coloca novos exercícios 🌟
+    - [] Permitir colocar exercícios
 - [] Mostra quantos exercícios tem no banco
 - [] Ver quantas questões já respondi de uma disciplina
 - [] Ver quantas questões já respondi de um conteúdo
@@ -34,6 +40,7 @@
 - [] Exporta questões de um conteúdo 🌟
 - [] Exporta questões de uma disciplina 🌟
 - [] Exporta questões de um um capítulo 🌟
+- [] Fazer preenchedor de area, conteúdo e disciplina
 
 // Futuro
 - [] Rank de questões no capítulo, no livro, no conteúdo e etc.

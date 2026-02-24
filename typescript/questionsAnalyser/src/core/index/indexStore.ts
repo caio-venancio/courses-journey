@@ -4,4 +4,5 @@ export interface IndexStore {
   save(doc: Document): void;
   search(query: string): Document[];
   clear(): void;
+  check(): void;
 }

@@ -37,11 +37,13 @@ const perguntaDaInterface: string = `
     Verificar se há arquivos no padrão errado - 3
     Contar quantos arquivos de cada padrão tem - 4
     Formatar uma questão para exemplo - 6
+    Mostrar banco de dados atual - 7
 `
 
 const fileProvider = new NodeFileProvider();
 const documentValidador = new DocumentValidator(fileProvider)
 const markdownParser = new MarkdownParser()
+const indexStore = new SqliteIndexStore();
 
 let answer = 1;
 while(answer != 0){
@@ -80,6 +82,11 @@ while(answer != 0){
         } else{
             console.log("Response em 6 falhou.")
         }
+    }
+
+    if(answer == 7){
+        console.log("Banco atual:")
+        indexStore.check()
     }
 }
 rl.close(); 
