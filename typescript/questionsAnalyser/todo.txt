@@ -24,10 +24,10 @@
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟
-    - [] Fazer criador de banco de dados
-        - [] Fazer verificador do estado atual do banco de dados
+    - [X] Fazer criador de banco de dados
+        - [X] Fazer verificador do estado atual do banco de dados
             - [X] printar ddl
-            - [] printar dml e dcl
+            - [X] printar dml
 - [] Coloca novos exercícios 🌟
     - [] Permitir colocar exercícios
 - [] Mostra quantos exercícios tem no banco

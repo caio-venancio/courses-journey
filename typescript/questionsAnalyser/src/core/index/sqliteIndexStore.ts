@@ -13,6 +13,15 @@ export class SqliteIndexStore implements IndexStore {
         title TEXT,
         content TEXT
       );
+
+      CREATE TABLE IF NOT EXISTS questions (
+        title TEXT PRIMARY KEY NOT NULL,
+        question TEXT NOT NULL,
+        answer TEXT,
+        book_id TEXT,
+        chapter INTEGER,
+        has_document BOOLEAN DEFAULT 0
+      );
     `);
   }
 
@@ -41,24 +50,22 @@ export class SqliteIndexStore implements IndexStore {
   }
 
   printTableCounts() {
-    // 2. Buscar todos os nomes de tabelas de usuário (ignoring internal sqlite tables)
     const tableNames = this.db.prepare(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
     ).all() as { name: string }[];
 
     console.log('--- Contagem de Itens por Tabela ---');
 
-    // 3. Iterar sobre as tabelas e contar as linhas
     for (const table of tableNames) {
         const tableName = table.name;
-        
-        // Usamos uma string literal para o nome da tabela. 
-        // Nota: Nome de tabela não pode ser parâmetro ? em prepared statements
         const count = this.db.prepare(`SELECT COUNT(*) as count FROM "${tableName}"`).get() as { count: number };
         
         console.log(`Tabela: ${tableName} | Itens: ${count.count}`);
     }
     console.log('-----------------------------------');
-}
+  }
 
+  close(): void {
+    this.db.close(); //task: fazer classe receber o .db para melhor arquitetura algum dia
+  }
 }
