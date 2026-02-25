@@ -36,6 +36,29 @@ export class SqliteIndexStore implements IndexStore {
 
   check(): void {
     const schema = this.db.prepare("SELECT sql FROM sqlite_master WHERE type='table'").all();
-    console.log(JSON.stringify(schema, null, 2))
+    console.log("tabelas:", JSON.stringify(schema, null, 2))
+    this.printTableCounts()
   }
+
+  printTableCounts() {
+    // 2. Buscar todos os nomes de tabelas de usuário (ignoring internal sqlite tables)
+    const tableNames = this.db.prepare(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
+    ).all() as { name: string }[];
+
+    console.log('--- Contagem de Itens por Tabela ---');
+
+    // 3. Iterar sobre as tabelas e contar as linhas
+    for (const table of tableNames) {
+        const tableName = table.name;
+        
+        // Usamos uma string literal para o nome da tabela. 
+        // Nota: Nome de tabela não pode ser parâmetro ? em prepared statements
+        const count = this.db.prepare(`SELECT COUNT(*) as count FROM "${tableName}"`).get() as { count: number };
+        
+        console.log(`Tabela: ${tableName} | Itens: ${count.count}`);
+    }
+    console.log('-----------------------------------');
+}
+
 }
