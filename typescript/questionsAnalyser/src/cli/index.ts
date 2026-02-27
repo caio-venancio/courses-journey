@@ -38,6 +38,7 @@ const perguntaDaInterface: string = `
     Contar quantos arquivos de cada padrão tem - 4
     Formatar uma questão para exemplo - 6
     Mostrar banco de dados atual - 7
+    Adicionar uma questão ao banco de dados atual - 8
 `
 
 const fileProvider = new NodeFileProvider();
@@ -87,6 +88,20 @@ while(answer != 0){
     if(answer == 7){
         console.log("Banco atual:")
         indexStore.check()
+    }
+
+    if(answer == 8){
+        let response = await documentValidador.onlyQuestionsTitle()
+         if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedQuestion = await markdownParser.parseQuestion(content, filename)
+
+            console.log("indexStore.saveQuestion():", indexStore.saveQuestion(parsedQuestion))
+            console.log("Chegando depois de adicionar:"), indexStore.check()
+        } else{
+            console.log("Response em 6 falhou.")
+        }
     }
 }
 rl.close(); 

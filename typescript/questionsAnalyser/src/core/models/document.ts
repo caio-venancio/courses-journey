@@ -20,7 +20,7 @@ export interface Question {
   subjects?: string[];
   topic?: string[];
   rank?: number[];
-  hasDocument?: boolean;
+  hasDocument?: number;
 }
 
 export interface Book {

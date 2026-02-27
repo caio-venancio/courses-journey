@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import type { Document } from "../models/document";
+import type { Document, Question } from "../models/document";
 import type { IndexStore } from "./indexStore";
 
 export class SqliteIndexStore implements IndexStore {
@@ -30,6 +30,19 @@ export class SqliteIndexStore implements IndexStore {
       INSERT INTO documents (id, path, title, content)
       VALUES (?, ?, ?, ?)
     `).run(doc.id, doc.path, doc.title, doc.content);
+  }
+
+  saveQuestion(question: Question): void {
+    try {
+      this.db.prepare(`
+      INSERT INTO questions (title, question, answer, book_id, chapter, has_document)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).run(question.title, question.question, question.answer, question.bookId, question.chapter, question.hasDocument);
+    } catch (err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('A questao que deu erro:', question)
+    }
   }
 
   search(query: string): Document[] {

@@ -49,7 +49,7 @@ export class MarkdownParser {
       answer: answerContent?.[1]?.trim() || "Not found",
       bookId: bookIdContent?.[1]?.trim() || "Not found",
       chapter: chapterContent?.[1] ? parseInt(chapterContent[1], 10) : null,
-      hasDocument: content.length > 1
+      hasDocument: Number(content.length > 1)
     }
   }
 

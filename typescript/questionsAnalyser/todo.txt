@@ -24,12 +24,14 @@
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟
+    - [] Verificar se há títulos repetidos
     - [X] Fazer criador de banco de dados
         - [X] Fazer verificador do estado atual do banco de dados
             - [X] printar ddl
             - [X] printar dml
 - [] Coloca novos exercícios 🌟
-    - [] Permitir colocar exercícios
+    - [X] Permitir colocar exercícios
+        - [X] Avisar se falhar e parar
 - [] Mostra quantos exercícios tem no banco
 - [] Ver quantas questões já respondi de uma disciplina
 - [] Ver quantas questões já respondi de um conteúdo
