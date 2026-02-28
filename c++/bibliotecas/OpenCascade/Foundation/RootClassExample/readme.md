@@ -1,3 +1,16 @@
+# Como rodar?
+
+```
+cmake -B build -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config release
+```
+
+Analisei a falta de dependências via lucasg/Dependencies e depois:
+
+```
+.\build\Release\hello.exe
+```
+
 https://dev.opencascade.org/doc/overview/html/occt_user_guides__foundation_classes.html
 
 O que são Root Classes do OCCT?
