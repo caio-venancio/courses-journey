@@ -114,4 +114,36 @@ export class DocumentValidator {
     
     return response
   }
+
+  async verifyUniqueQuestionsTitles(): Promise<string[]>{
+    const response = []
+    const titles = await this.onlyQuestionsTitle()
+    const seen = new Set<string>()
+    const titleRegex = /(P\d+\.\d+\s-\s.*?)(?=\s-\s)/
+    for(const title of titles){
+      try{
+        
+        const matchContent = title.match(titleRegex)
+        const titleContent = matchContent?.[1]?.trim() || "not found"
+
+        if(titleContent == "not found"){
+          // console.log("este era o match content", matchContent)
+          // console.log("este era o title", title)
+          // await setTimeout(() => {}, 10000)
+          response.push(title)
+          continue
+        }
+
+        if(!seen.has(titleContent)){
+          seen.add(titleContent)
+        } else {
+          response.push(titleContent)
+        } 
+      } catch(err){
+        console.warn(`Falha ao retornar as contabilizar ${title}`, err)
+      }
+    }
+
+    return response
+  }
 }

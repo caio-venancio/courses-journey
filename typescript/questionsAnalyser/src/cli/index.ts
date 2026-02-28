@@ -39,6 +39,7 @@ const perguntaDaInterface: string = `
     Formatar uma questão para exemplo - 6
     Mostrar banco de dados atual - 7
     Adicionar uma questão ao banco de dados atual - 8
+    Verificar se tem questões com título repetido - 9
 `
 
 const fileProvider = new NodeFileProvider();
@@ -102,6 +103,11 @@ while(answer != 0){
         } else{
             console.log("Response em 6 falhou.")
         }
+    }
+
+    if(answer == 9){
+        let response = await documentValidador.verifyUniqueQuestionsTitles()
+        console.log("este sao as perguntas com títulos repetidas ou erradas:", response)
     }
 }
 rl.close(); 

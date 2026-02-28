@@ -24,7 +24,7 @@
 
 // IndexStore e SearchService
 - [] Verifica se há novos exercícios 🌟
-    - [] Verificar se há títulos repetidos
+    - [X] Verificar se há títulos repetidos nas questões
     - [X] Fazer criador de banco de dados
         - [X] Fazer verificador do estado atual do banco de dados
             - [X] printar ddl
