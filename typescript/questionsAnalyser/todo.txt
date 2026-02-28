@@ -23,7 +23,7 @@
 - [] Fazer um limpador de texto
 
 // IndexStore e SearchService
-- [] Verifica se há novos exercícios 🌟
+- [X] Verifica se há novos exercícios 🌟
     - [X] Verificar se há títulos repetidos nas questões
     - [X] Fazer criador de banco de dados
         - [X] Fazer verificador do estado atual do banco de dados

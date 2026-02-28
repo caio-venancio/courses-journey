@@ -52,6 +52,19 @@ export class SqliteIndexStore implements IndexStore {
     `).all(`%${query}%`) as Document[];
   }
 
+  verifyQuestion(questionTitle: string): boolean {
+    try {
+      const stmt = this.db.prepare('SELECT EXISTS(SELECT 1 FROM questions WHERE title = ? LIMIT 1) AS existe');
+      const resultado = stmt.get(questionTitle) as { existe: number };
+      return resultado.existe === 1;
+    } catch(err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('A questao que deu erro:', questionTitle)
+      return false;
+    }
+  }
+
   clear(): void {
     this.db.exec("DELETE FROM documents");
   }
