@@ -17,7 +17,7 @@ export class DocumentValidator {
     private readonly fileProvider: FileProvider,
   ) {
     this.bookPattern = /./;
-    this.titleBookPattern = /^(.+?) - (?:(\d+ ed\.) - )?(.+)$/;
+    this.titleBookPattern = /^(?!Capítulo\b)(?!P\d+\.\d+[a-zA-Z]*\b)(?!Perguntas\b)(.+?) - (?:(\d+)ed - )?(.+)\.md$/;
     this.chapterPattern = /./;
     this.titleChapterPattern = /^Cap[ií]tulo (\d+) - ([A-Za-z0-9&]+)(?: - (.+))?$/;
     this.commonAskedPattern = /./;
@@ -110,8 +110,25 @@ export class DocumentValidator {
         console.warn(`Falha ao retornar as questões ${path}`, err)
       }
     }
-
     
+    return response
+  }
+
+  async onlyBooksTitle(): Promise<string[]>{
+    const response = []
+    const files = await this.fileProvider.listMarkdownFiles()
+    for(const path of files){
+      try {
+        const filename = this.fileProvider.filenameOnly(path)
+        let isBook = this.titleBookPattern.test(filename)
+        if(isBook){
+          response.push(path)
+        }
+      } catch (err){
+        console.warn(`Falha ao retornar as questões de ${path}`, err)
+      }
+    }
+
     return response
   }
 
@@ -144,6 +161,30 @@ export class DocumentValidator {
       }
     }
 
+    return response
+  }
+
+  async badRegexFiles(): Promise<string[]>{
+    const response = []
+    const paths = await this.fileProvider.listMarkdownFiles()
+    for (const path of paths){
+      try{
+        const filename = this.fileProvider.filenameOnly(path)
+        let isBook = this.titleBookPattern.test(filename)
+        let isQuestion = this.titleQuestionPattern.test(filename)
+        let isChapter = this.titleChapterPattern.test(filename)
+        let isCommonAsked = this.titleCommonAskedPattern.test(filename)
+
+        let conditions = [isBook, isQuestion, isChapter, isCommonAsked]
+        let qtdtrue =  conditions.filter(Boolean).length;
+
+        if(qtdtrue > 2){
+          response.push(path)
+        }
+      } catch {
+        console.warn(`badRegexFiles: não foi possível availar ${path}`)
+      }
+    }
     return response
   }
 }

@@ -29,16 +29,16 @@ export interface Book {
   authors?: string[];
   chapters?: string[];
   area?: string[];
-  conteudo?: string[];
+  subjects?: string[];
   topic?: string[];
-  hasDocument?: boolean;
+  hasDocument?: number;
 }
 
 export interface Chapter {
   title: string;
   activities?: string[];
   area?: string[];
-  conteudo?: string[];
+  subjects?: string[];
   topic?: string[];
   hasDocument?: boolean;
 }
@@ -48,7 +48,7 @@ export interface CommonAsked {
   title: string;
   questions?: string[];
   area?: string[];
-  conteudo?: string[];
+  subjects?: string[];
   topic?: string[];
   hasDocument?: boolean;
 }

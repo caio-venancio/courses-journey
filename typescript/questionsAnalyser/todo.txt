@@ -22,7 +22,7 @@
     - [] Fazer identificador de padrão para todos os tipos de documento
 - [] Fazer um limpador de texto
 
-// IndexStore e SearchService
+// IndexStore
 - [X] Verifica se há novos exercícios 🌟
     - [X] Verificar se há títulos repetidos nas questões
     - [X] Fazer criador de banco de dados
@@ -32,14 +32,32 @@
 - [X] Coloca novos exercícios 🌟
     - [X] Permitir colocar exercícios
         - [X] Avisar se falhar e parar
+
+// SearchService
 - [] Mostra quantos exercícios tem no banco
 - [] Ver quantas questões já respondi de uma disciplina
 - [] Ver quantas questões já respondi de um conteúdo
 - [] Ver quantos capítulos tem em um conteúdo
 - [] Ver quantas questões tem de uma disciplina 🌟
+    - [] Cadastra disciplinas
+        - [] Cadastra livros
+            - [] Fazer identifcador de padrão que retorna dados
+                - [X] Retornar todos os livros reconhecidos
+            - [] cria banco de livros
+            - [] coloca livros
+                    - [] detecta se algum não existe
 - [] Ver quantas questões tem de um conteúdo 🌟
+    - [] Cadastra conteúdos
+        - [] Cadastra capítulos
+            - [] Fazer identifcador de padrão que retorna dados
+            - [] Cria banco de dados
+            - [] coloca capítulos
+                - [] detecta se algum não existe
 - [] Ver quantas questões tem de um capítulo 
 - [] Exporta questões de um conteúdo 🌟
+    - [] Seleciona questões aleatórias
+    - [] Seleciona questões por rank de prioridade
+        - [] Faz rank de prioridade
 - [] Exporta questões de uma disciplina 🌟
 - [] Exporta questões de um um capítulo 🌟
 - [] Fazer preenchedor de area, conteúdo e disciplina
@@ -47,6 +65,7 @@
 //software
 - [] Fazer suite de testes inicial
 - [] Organizar menu do cli
+- [] Unificar regex e testar regex
 
 // Futuro
 - [] Rank de questões no capítulo, no livro, no conteúdo e etc.

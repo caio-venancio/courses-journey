@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import type { Document, Question } from "../models/document";
+import type { Document, Question, Book } from "../models/document";
 import { randomUUID } from "crypto";
 
 export class MarkdownParser {
@@ -53,9 +53,44 @@ export class MarkdownParser {
     }
   }
 
-  parseBook(){
-    throw new Error("Method not implemented.");
+  parseBook(content: string, filename: string): Book{
+    const titleBookPattern = /^(.+?) - (?:(\d+)\s*ed\.\s* - )?(.+)$/;
+    const chapterPattern = /- \[\[Capítulo\s+\d+\s+-\s+.+?\]\]/g;
+
+    const match = filename.match(titleBookPattern);
+
+    if (!match) {
+      throw new Error("Filename fora do padrão esperado.");
+    }
+
+    const title = match[1]!.trim();
+    const edition = match[2] ? parseInt(match[2], 10) : 1;
+
+    let authors = [""]
+
+    try {
+      authors = match[3]!
+        .split(",")
+        .map(author => author.trim());
+    } catch {
+      console.log("parseBook: O autor nao foi especificado em", match[0])
+    }
+
+    const chaptersMatches = content.match(chapterPattern) || [];
+
+    const chapters = chaptersMatches.map(chapter =>
+      chapter.replace(/^- \[\[|\]\]$/g, "").trim()
+    );
+
+    return {
+      title,
+      edition,
+      authors,
+      chapters,
+      hasDocument: content.length > 1 ? 1 : 0
+    }
   }
+  
 
   parseChapter(){
     throw new Error("Method not implemented.");

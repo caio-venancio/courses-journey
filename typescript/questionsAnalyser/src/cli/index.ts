@@ -31,17 +31,27 @@ if (!checkConfig()){
 const perguntaDaInterface: string = `
     O que deseja realizar?
     Sair do programa - 0
+
     Mostrar qual pasta está configurada - 1
+
     Mostrar quais arquivos foram detectados - 2
-    Mostrar todas as questões detectadas - 5
     Verificar se há arquivos no padrão errado - 3
     Contar quantos arquivos de cada padrão tem - 4
+    Mostrar todas as questões detectadas - 5
     Formatar uma questão para exemplo - 6
+    Mostrar todos os capítulos detectados - 
+    Formatar um capítulo para exemplo -
+    Mostrar todos os livros detectados - 12
+    Formatar um livro para exemplo - 
+
+
     Mostrar banco de dados atual - 7
     Adicionar uma questão ao banco de dados atual - 8
     Verificar se tem questões com título repetido - 9
     Verifica se tem novos exercícios - 10
     Adiciona questões no banco - 11
+
+
 `
 
 const fileProvider = new NodeFileProvider();
@@ -157,6 +167,11 @@ while(answer != 0){
         console.log(savedCounter, "questoes nao estavam no banco de dados.")
         console.log("Tem", questions.length, "questoes arquivos no docs.")
         }
+    }
+
+    if(answer == 12){
+        let response = documentValidador.onlyBooksTitle()
+        console.log("Essas são os livros detectados:", await response)
     }
 }
 rl.close(); 
