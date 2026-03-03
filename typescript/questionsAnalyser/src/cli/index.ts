@@ -37,6 +37,7 @@ const perguntaDaInterface: string = `
     Mostrar quais arquivos foram detectados - 2
     Verificar se há arquivos no padrão errado - 3
     Contar quantos arquivos de cada padrão tem - 4
+    Mostra arquivos que estao sendo contabilizados em mais de um padrao - 13
     Mostrar todas as questões detectadas - 5
     Formatar uma questão para exemplo - 6
     Mostrar todos os capítulos detectados - 
@@ -172,6 +173,11 @@ while(answer != 0){
     if(answer == 12){
         let response = documentValidador.onlyBooksTitle()
         console.log("Essas são os livros detectados:", await response)
+    }
+
+    if(answer == 13){
+        let response = documentValidador.badRegexFiles()
+        console.log("Estes sao os arquivos ambíguos:", await response)
     }
 }
 rl.close(); 

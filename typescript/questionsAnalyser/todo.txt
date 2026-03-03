@@ -21,6 +21,7 @@
         - [X] Fazer documentValidator retornar as funções
     - [] Fazer identificador de padrão para todos os tipos de documento
 - [] Fazer um limpador de texto
+- [] Verifca se há padrões inconsistentes (detectados por mais de um padrão)
 
 // IndexStore
 - [X] Verifica se há novos exercícios 🌟
