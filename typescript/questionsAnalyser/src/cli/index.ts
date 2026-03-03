@@ -40,10 +40,12 @@ const perguntaDaInterface: string = `
     Mostra arquivos que estao sendo contabilizados em mais de um padrao - 13
     Mostrar todas as questões detectadas - 5
     Formatar uma questão para exemplo - 6
-    Mostrar todos os capítulos detectados - 
+    Mostrar todos os capítulos detectados - 14
     Formatar um capítulo para exemplo -
     Mostrar todos os livros detectados - 12
     Formatar um livro para exemplo - 
+    Mostrar todas as perguntas comuns detectadas - 15
+    Formatar uma pergunta comum para exemplo - 
 
 
     Mostrar banco de dados atual - 7
@@ -178,6 +180,16 @@ while(answer != 0){
     if(answer == 13){
         let response = documentValidador.badRegexFiles()
         console.log("Estes sao os arquivos ambíguos:", await response)
+    }
+
+    if(answer == 14){   
+        let response = documentValidador.onlyChpatersTitle()
+        console.log("Estes sao os capitulos detectados:", await response)
+    }
+
+    if(answer == 15){
+        let response = documentValidador.onlyCommonAskedTitle()
+        console.log("Estes sao as perguntas comuns detectados:", await response)
     }
 }
 rl.close(); 

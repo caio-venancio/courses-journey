@@ -21,7 +21,7 @@ export class DocumentValidator {
     this.chapterPattern = /./;
     this.titleChapterPattern = /^Cap[ií]tulo (\d+) - ([A-Za-z0-9&]+)(?: - (.+))?$/;
     this.commonAskedPattern = /./;
-    this.titleCommonAskedPattern = /^Perguntas Comum(?: (\d+))? - ([A-Za-z0-9&]+) - Cap[ií]tulo (\d+)$/;
+    this.titleCommonAskedPattern = /^Pergunta[s]?\s+Comum(?:\s+(\d+))?\s+[-–—]\s+(.+?)\s+[-–—]\s+Cap[ií]tulo\s+(\d+)(?:\.md)?$/iu;
     this.questionPattern = /./;
     this.titleQuestionPattern = /^([A-Za-z])(\d+)\.(\d+) - ([A-Za-z0-9&]+) - (.+)$/;
     this.answeredPattern = /./;
@@ -125,7 +125,44 @@ export class DocumentValidator {
           response.push(path)
         }
       } catch (err){
-        console.warn(`Falha ao retornar as questões de ${path}`, err)
+        console.warn(`Falha ao retornar os livros de ${path}`, err)
+      }
+    }
+
+    return response
+  }
+
+  async onlyChpatersTitle(){
+    const response = []
+    const files = await this.fileProvider.listMarkdownFiles()
+    for(const path of files){
+      try {
+        const filename = this.fileProvider.filenameOnly(path)
+        let is = this.titleChapterPattern.test(filename)
+        if(is){
+          response.push(path)
+        }
+      } catch (err){
+        console.warn(`Falha ao retornar os capitulos de ${path}`, err)
+      }
+    }
+
+    return response
+  }
+
+  async onlyCommonAskedTitle(){
+    const response = []
+    const files = await this.fileProvider.listMarkdownFiles()
+    for(const path of files){
+      try {
+        const filename = this.fileProvider.filenameOnly(path)
+        // const normalized = filename.normalize("NFC");
+        let is = this.titleCommonAskedPattern.test(filename)
+        if(is){
+          response.push(path)
+        }
+      } catch (err){
+        console.warn(`Falha ao retornar os questoes comuns de  de ${path}`, err)
       }
     }
 
