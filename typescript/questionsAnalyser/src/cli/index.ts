@@ -41,6 +41,7 @@ const perguntaDaInterface: string = `
     Adicionar uma questão ao banco de dados atual - 8
     Verificar se tem questões com título repetido - 9
     Verifica se tem novos exercícios - 10
+    Adiciona questões no banco - 11
 `
 
 const fileProvider = new NodeFileProvider();
@@ -113,7 +114,6 @@ while(answer != 0){
     }
 
     if(answer == 10){
-        console.log("Este tá quase saindo... mas ainda não foi implementado")
         let counter = 0;
         let questions = await documentValidador.onlyQuestionsTitle() 
         for (const question of questions) {
@@ -131,6 +131,32 @@ while(answer != 0){
         }
         console.log(counter, "questoes não estão no banco de dados.")
         console.log("Tem", questions.length, "questoes arquivos no docs.")
+    }
+
+    if(answer == 11){
+        console.log("Adicionando novos exercícios...")
+        let counter = 0;
+        let savedCounter = 0;
+        let questions = await documentValidador.onlyQuestionsTitle() 
+        for (const question of questions) {
+            try {
+                const content = await fileProvider.readFile(question);
+                const filename = await fileProvider.filenameOnly(question);
+                const parsedQuestion = markdownParser.parseQuestion(content, filename)
+                const title = parsedQuestion.title
+                if(!indexStore.verifyQuestion(title)){
+                    console.log("Questao", title, "não está no banco.")
+                    indexStore.saveQuestion(parsedQuestion)
+                    savedCounter++;
+                }
+                counter++;
+            } catch (err) {
+                console.log("Algo falhou no 11")
+            }
+        console.log(counter, "questoes analisadas.")
+        console.log(savedCounter, "questoes nao estavam no banco de dados.")
+        console.log("Tem", questions.length, "questoes arquivos no docs.")
+        }
     }
 }
 rl.close(); 

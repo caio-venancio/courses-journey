@@ -29,7 +29,7 @@
         - [X] Fazer verificador do estado atual do banco de dados
             - [X] printar ddl
             - [X] printar dml
-- [] Coloca novos exercícios 🌟
+- [X] Coloca novos exercícios 🌟
     - [X] Permitir colocar exercícios
         - [X] Avisar se falhar e parar
 - [] Mostra quantos exercícios tem no banco
@@ -43,6 +43,10 @@
 - [] Exporta questões de uma disciplina 🌟
 - [] Exporta questões de um um capítulo 🌟
 - [] Fazer preenchedor de area, conteúdo e disciplina
+
+//software
+- [] Fazer suite de testes inicial
+- [] Organizar menu do cli
 
 // Futuro
 - [] Rank de questões no capítulo, no livro, no conteúdo e etc.
