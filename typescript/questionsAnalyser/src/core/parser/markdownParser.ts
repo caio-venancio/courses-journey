@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import type { Document, Question, Book } from "../models/document";
+import type { Document, Question, Book, Chapter } from "../models/document";
 import { randomUUID } from "crypto";
 
 export class MarkdownParser {
@@ -92,9 +92,34 @@ export class MarkdownParser {
     }
   }
   
+  parseChapter(content: string, filename: string): Chapter {
 
-  parseChapter(){
-    throw new Error("Method not implemented.");
+    const chapterTitleRegex =
+    /^Cap[ií]tulo\s+(\d+)\s+[-–—]\s+(.+?)\s+[-–—]\s+(.+?)\.md$/iu;
+
+    const match = filename.normalize("NFC").match(chapterTitleRegex);
+
+    if (!match) {
+      throw new Error("Filename não está no padrão de capítulo.");
+    }
+
+    const number = parseInt(match[1]!, 10);
+    const bookId = match[2]!.trim();
+    const title = match[3]!.trim();
+
+    // atividades dentro de [[...]]
+    const activitiesRegex = /\[\[(.+?)\]\]/g;
+    const activitiesMatches = [...content.matchAll(activitiesRegex)];
+
+    const activities = activitiesMatches.map(m => m[1]!.trim());
+
+    return {
+      title,
+      number,
+      bookId,
+      activities,
+      hasDocument: content.length > 1 ? 1 : 0
+    };
   }
 
   parseCommonAsked(){

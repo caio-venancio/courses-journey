@@ -36,11 +36,13 @@ export interface Book {
 
 export interface Chapter {
   title: string;
+  number: number;
+  bookId: string;
   activities?: string[];
   area?: string[];
   subjects?: string[];
   topic?: string[];
-  hasDocument?: boolean;
+  hasDocument?: number;
 }
 
 export interface CommonAsked {

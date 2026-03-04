@@ -132,7 +132,7 @@ export class DocumentValidator {
     return response
   }
 
-  async onlyChpatersTitle(){
+  async onlyChaptersTitle(){
     const response = []
     const files = await this.fileProvider.listMarkdownFiles()
     for(const path of files){

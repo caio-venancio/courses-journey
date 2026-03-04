@@ -41,7 +41,7 @@ const perguntaDaInterface: string = `
     Mostrar todas as questões detectadas - 5
     Formatar uma questão para exemplo - 6
     Mostrar todos os capítulos detectados - 14
-    Formatar um capítulo para exemplo -
+    Formatar um capítulo para exemplo - 17
     Mostrar todos os livros detectados - 12
     Formatar um livro para exemplo - 16
     Mostrar todas as perguntas comuns detectadas - 15
@@ -82,7 +82,7 @@ while(answer != 0){
     if(answer == 4){
         let questions = await documentValidador.onlyQuestionsTitle()
         let books = await documentValidador.onlyBooksTitle()
-        let chapters = await documentValidador.onlyChpatersTitle()
+        let chapters = await documentValidador.onlyChaptersTitle()
         let CommonAsked = await documentValidador.onlyCommonAskedTitle()
         let list = await fileProvider.listMarkdownFiles()
         console.log(`
@@ -195,7 +195,7 @@ while(answer != 0){
     }
 
     if(answer == 14){   
-        let response = documentValidador.onlyChpatersTitle()
+        let response = documentValidador.onlyChaptersTitle()
         console.log("Estes sao os capitulos detectados:", await response)
     }
 
@@ -214,6 +214,19 @@ while(answer != 0){
             console.log("MarkdownParser.parseBook():", parsedBook)
         } else{
             console.log("Response em 16 falhou.")
+        }
+    }
+
+    if(answer == 17){
+        let response = await documentValidador.onlyChaptersTitle()
+        if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedChapter = await markdownParser.parseChapter(content, filename)
+
+            console.log("MarkdownParser.parseChapter():", parsedChapter)
+        } else{
+            console.log("Response em 17 falhou.")
         }
     }
 }
