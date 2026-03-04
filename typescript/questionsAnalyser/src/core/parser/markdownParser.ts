@@ -54,7 +54,7 @@ export class MarkdownParser {
   }
 
   parseBook(content: string, filename: string): Book{
-    const titleBookPattern = /^(.+?) - (?:(\d+)\s*ed\.\s* - )?(.+)$/;
+    const titleBookPattern =/^(.+?) - (?:(\d+)\s*ed\.?\s* - )?(.+?)\.md$/;
     const chapterPattern = /- \[\[Capítulo\s+\d+\s+-\s+.+?\]\]/g;
 
     const match = filename.match(titleBookPattern);
@@ -64,6 +64,7 @@ export class MarkdownParser {
     }
 
     const title = match[1]!.trim();
+    console.log("match:", match)
     const edition = match[2] ? parseInt(match[2], 10) : 1;
 
     let authors = [""]

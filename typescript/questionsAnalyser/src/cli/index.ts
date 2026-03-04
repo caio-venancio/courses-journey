@@ -43,7 +43,7 @@ const perguntaDaInterface: string = `
     Mostrar todos os capítulos detectados - 14
     Formatar um capítulo para exemplo -
     Mostrar todos os livros detectados - 12
-    Formatar um livro para exemplo - 
+    Formatar um livro para exemplo - 16
     Mostrar todas as perguntas comuns detectadas - 15
     Formatar uma pergunta comum para exemplo - 
 
@@ -80,7 +80,19 @@ while(answer != 0){
     }
 
     if(answer == 4){
-        console.log("Brincadeiera, ainda não foi implementado kk")
+        let questions = await documentValidador.onlyQuestionsTitle()
+        let books = await documentValidador.onlyBooksTitle()
+        let chapters = await documentValidador.onlyChpatersTitle()
+        let CommonAsked = await documentValidador.onlyCommonAskedTitle()
+        let list = await fileProvider.listMarkdownFiles()
+        console.log(`
+            Tem ${questions.length} perguntas.
+            Tem ${books.length} livros.
+            Tem ${chapters.length} capitulos.
+            Tem ${CommonAsked.length} perguntas comuns.
+            Contabilizados: ${questions.length + books.length + chapters.length + CommonAsked.length}
+            Total: ${list.length}
+            `)
     }
 
     if(answer == 5){
@@ -190,6 +202,19 @@ while(answer != 0){
     if(answer == 15){
         let response = documentValidador.onlyCommonAskedTitle()
         console.log("Estes sao as perguntas comuns detectados:", await response)
+    }
+
+    if(answer == 16){
+        let response = await documentValidador.onlyBooksTitle()
+        if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedBook = await markdownParser.parseBook(content, filename)
+
+            console.log("MarkdownParser.parseBook():", parsedBook)
+        } else{
+            console.log("Response em 16 falhou.")
+        }
     }
 }
 rl.close(); 
