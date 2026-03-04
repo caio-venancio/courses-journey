@@ -1,8 +1,10 @@
-import type { Document, Question } from "../models/document";
+import type { Document, Question, Book, Chapter } from "../models/document";
 
 export interface IndexStore {
   save(doc: Document): void;
   saveQuestion(question: Question): void;
+  saveBook(book: Book): void;
+  saveChapter(chapter: Chapter): void;
   search(query: string): Document[];
   verifyQuestion(questionTitle: string): boolean 
   clear(): void;

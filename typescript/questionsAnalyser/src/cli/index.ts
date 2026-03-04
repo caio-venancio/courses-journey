@@ -28,6 +28,8 @@ if (!checkConfig()){
     }
 }
 
+
+
 const perguntaDaInterface: string = `
     O que deseja realizar?
     Sair do programa - 0
@@ -50,6 +52,8 @@ const perguntaDaInterface: string = `
 
     Mostrar banco de dados atual - 7
     Adicionar uma questão ao banco de dados atual - 8
+    Adicionar um livro ao banco de dados atual - 18
+    Adicionar um capitulo ao banco de dados atual - 19
     Verificar se tem questões com título repetido - 9
     Verifica se tem novos exercícios - 10
     Adiciona questões no banco - 11
@@ -61,6 +65,7 @@ const fileProvider = new NodeFileProvider();
 const documentValidador = new DocumentValidator(fileProvider)
 const markdownParser = new MarkdownParser()
 const indexStore = new SqliteIndexStore();
+
 
 let answer = 1;
 while(answer != 0){
@@ -129,7 +134,7 @@ while(answer != 0){
             console.log("indexStore.saveQuestion():", indexStore.saveQuestion(parsedQuestion))
             console.log("Chegando depois de adicionar:"), indexStore.check()
         } else{
-            console.log("Response em 6 falhou.")
+            console.log("Response em 8 falhou.")
         }
     }
 
@@ -227,6 +232,36 @@ while(answer != 0){
             console.log("MarkdownParser.parseChapter():", parsedChapter)
         } else{
             console.log("Response em 17 falhou.")
+        }
+    }
+
+    if(answer == 18){
+        let response = await documentValidador.onlyBooksTitle()
+        console.log("salvando", response[1], "no banco")
+         if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedBook = await markdownParser.parseBook(content, filename)
+
+            console.log("indexStore.saveBook():", indexStore.saveBook(parsedBook))
+            console.log("Chegando depois de adicionar:"), indexStore.check()
+        } else{
+            console.log("Response em 18 falhou.")
+        }
+    }
+
+    if(answer == 19){
+        let response = await documentValidador.onlyChaptersTitle()
+        console.log("salvando", response[1], "no banco")
+         if(response[1]){
+            const content = await fileProvider.readFile(response[1]);
+            const filename = await fileProvider.filenameOnly(response[1]);
+            const parsedQuestion = await markdownParser.parseChapter(content, filename)
+
+            console.log("indexStore.saveChapter():", indexStore.saveChapter(parsedQuestion))
+            console.log("Chegando depois de adicionar:"), indexStore.check()
+        } else{
+            console.log("Response em 19 falhou.")
         }
     }
 }

@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import type { Document, Question } from "../models/document";
+import type { Book, Document, Question, Chapter } from "../models/document";
 import type { IndexStore } from "./indexStore";
 
 export class SqliteIndexStore implements IndexStore {
@@ -35,9 +35,9 @@ export class SqliteIndexStore implements IndexStore {
       CREATE TABLE IF NOT EXISTS chapters (
           title TEXT,
           number INTEGER NOT NULL,
-          bookId TEXT NOT NULL,
-          hasDocument BOOLEAN DEFAULT 0,
-          PRIMARY KEY (bookId, number)
+          book_id TEXT NOT NULL,
+          has_document BOOLEAN DEFAULT 0,
+          PRIMARY KEY (book_id, number)
       );
     `);
   }
@@ -62,6 +62,34 @@ export class SqliteIndexStore implements IndexStore {
     }
   }
 
+  saveBook(book: Book): void {
+    try {
+      this.db.prepare(`
+      INSERT INTO books (title, book_id, edition, has_document)
+      VALUES (?, ?, ?, ?)
+    `).run(book.title, book.bookId, book.edition, book.hasDocument);
+    } catch (err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('A questao que deu erro:', book)
+    }
+  }
+
+  saveChapter(chapter: Chapter): void {
+    try {
+      this.db.prepare(`
+      INSERT INTO chapters (title, book_id, number, has_document)
+      VALUES (?, ?, ?, ?)
+    `).run(chapter.title, chapter.bookId, chapter.number, chapter.hasDocument);
+    } catch (err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('A questao que deu erro:', chapter)
+    }
+  }
+
+
+
   search(query: string): Document[] {
     return this.db.prepare(`
       SELECT * FROM documents
@@ -84,6 +112,10 @@ export class SqliteIndexStore implements IndexStore {
 
   clear(): void {
     this.db.exec("DELETE FROM documents");
+  }
+
+  resetTable(): void {
+    this.db.exec("DROP TABLE IF EXISTS chapters;")
   }
 
   check(): void {

@@ -45,14 +45,14 @@
             - [X] Fazer identifcador de padrão que retorna dados
                 - [X] Retornar todos os livros reconhecidos
             - [X] cria banco de livros
-            - [] coloca um livro
+            - [X] coloca um livro
                     - [] detecta se algum não existe
 - [] Ver quantas questões tem de um conteúdo 🌟
     - [] Cadastra conteúdos
         - [] Cadastra capítulos
             - [X] Fazer identifcador de padrão que retorna dados
-            - [] Cria banco de dados
-            - [] coloca um capítulo
+            - [X] Cria banco de dados
+            - [X] coloca um capítulo
                 - [] detecta se algum não existe
 - [] Ver quantas questões tem de um capítulo 
 - [] Exporta questões de um conteúdo 🌟
