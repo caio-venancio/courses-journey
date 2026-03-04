@@ -44,7 +44,7 @@
         - [] Cadastra livros
             - [X] Fazer identifcador de padrão que retorna dados
                 - [X] Retornar todos os livros reconhecidos
-            - [] cria banco de livros
+            - [X] cria banco de livros
             - [] coloca um livros
                     - [] detecta se algum não existe
 - [] Ver quantas questões tem de um conteúdo 🌟
