@@ -53,9 +53,53 @@ export class MarkdownParser {
     }
   }
 
-  parseBook(content: string, filename: string): Book{
-    const titleBookPattern =/^(.+?) - (?:(\d+)\s*ed\.?\s* - )?(.+?)\.md$/;
-    const chapterPattern = /- \[\[Capítulo\s+\d+\s+-\s+.+?\]\]/g;
+  // parseBook(content: string, filename: string): Book{
+  //   const titleBookPattern =/^(.+?) - (?:(\d+)\s*ed\.?\s* - )?(.+?)\.md$/;
+  //   const chapterPattern = /- \[\[Capítulo\s+\d+\s+-\s+.+?\]\]/g;
+
+  //   const match = filename.match(titleBookPattern);
+
+  //   if (!match) {
+  //     throw new Error("Filename fora do padrão esperado.");
+  //   }
+
+  //   const title = match[1]!.trim();
+  //   console.log("match:", match)
+  //   const edition = match[2] ? parseInt(match[2], 10) : 1;
+
+  //   let authors = [""]
+
+  //   try {
+  //     authors = match[3]!
+  //       .split(",")
+  //       .map(author => author.trim());
+  //   } catch {
+  //     console.log("parseBook: O autor nao foi especificado em", match[0])
+  //   }
+
+  //   const chaptersMatches = content.match(chapterPattern) || [];
+
+  //   const chapters = chaptersMatches.map(chapter =>
+  //     chapter.replace(/^- \[\[|\]\]$/g, "").trim()
+  //   );
+
+  //   return {
+  //     title,
+  //     // bookId,
+  //     edition,
+  //     authors,
+  //     chapters,
+  //     hasDocument: content.length > 1 ? 1 : 0
+  //   }
+  // }
+
+  parseBook(content: string, filename: string): Book {
+
+    const titleBookPattern =
+    /^(.+?) - (?:(\d+)\s*ed\.?\s* - )?(.+?)\.md$/;
+
+    const chapterPattern =
+    /- \[\[Cap[ií]tulo\s+\d+\s+-\s+(.+?)\s+-\s+.+?\]\]/giu;
 
     const match = filename.match(titleBookPattern);
 
@@ -64,32 +108,39 @@ export class MarkdownParser {
     }
 
     const title = match[1]!.trim();
-    console.log("match:", match)
     const edition = match[2] ? parseInt(match[2], 10) : 1;
 
-    let authors = [""]
+    const authors = match[3]
+      ? match[3].split(",").map(a => a.trim())
+      : [];
 
-    try {
-      authors = match[3]!
-        .split(",")
-        .map(author => author.trim());
-    } catch {
-      console.log("parseBook: O autor nao foi especificado em", match[0])
-    }
+    // Extrair capítulos
+    const chaptersMatches = [...content.matchAll(chapterPattern)];
 
-    const chaptersMatches = content.match(chapterPattern) || [];
+    // const chapters = chaptersMatches.map(m => m[0]);
 
-    const chapters = chaptersMatches.map(chapter =>
+    const chaptersMatches2 = content.match(chapterPattern) || [];
+
+    const chapters = chaptersMatches2.map(chapter =>
       chapter.replace(/^- \[\[|\]\]$/g, "").trim()
     );
 
+
+    // Extrair bookId do primeiro capítulo (se existir)
+    let bookId = "";
+
+    if (chaptersMatches.length > 0) {
+      bookId = chaptersMatches[0]![1]!.trim();
+    }
+
     return {
       title,
+      bookId,
       edition,
       authors,
       chapters,
       hasDocument: content.length > 1 ? 1 : 0
-    }
+    };
   }
   
   parseChapter(content: string, filename: string): Chapter {

@@ -26,9 +26,18 @@ export class SqliteIndexStore implements IndexStore {
       CREATE TABLE IF NOT EXISTS books ( 
         id INTEGER PRIMARY KEY,
         title TEXT NOT NULL,
+        book_id TEXT UNIQUE,
         edition INTEGER DEFAULT 1,
         has_document BOOLEAN DEFAULT 0,
         UNIQUE(title, edition)
+      );
+
+      CREATE TABLE IF NOT EXISTS chapters (
+          title TEXT,
+          number INTEGER NOT NULL,
+          bookId TEXT NOT NULL,
+          hasDocument BOOLEAN DEFAULT 0,
+          PRIMARY KEY (bookId, number)
       );
     `);
   }

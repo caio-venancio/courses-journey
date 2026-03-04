@@ -26,6 +26,7 @@ export interface Question {
 export interface Book {
   title: string;
   edition?: number;
+  bookId?: string;
   authors?: string[];
   chapters?: string[];
   area?: string[];
