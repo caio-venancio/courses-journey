@@ -41,19 +41,25 @@
 - [] Ver quantos capítulos tem em um conteúdo
 - [] Ver quantas questões tem de uma disciplina 🌟
     - [] Cadastra disciplinas
-        - [] Cadastra livros
+        - [X] Cadastra livros
             - [X] Fazer identifcador de padrão que retorna dados
                 - [X] Retornar todos os livros reconhecidos
             - [X] cria banco de livros
             - [X] coloca um livro
                     - [] detecta se algum não existe
+        - [X] Fazer modelagem de disciplina
+        - [] Fazer Tabela no banco de dados
+        - [] Fazer pergunta por livro
 - [] Ver quantas questões tem de um conteúdo 🌟
     - [] Cadastra conteúdos
-        - [] Cadastra capítulos
+        - [X] Cadastra capítulos
             - [X] Fazer identifcador de padrão que retorna dados
             - [X] Cria banco de dados
             - [X] coloca um capítulo
                 - [] detecta se algum não existe
+        - [X] Fazer modelagem de disciplina
+        - [] Fazer Tabela no banco de dados
+        - [] Fazer pergunta por capítulo
 - [] Ver quantas questões tem de um capítulo 
 - [] Exporta questões de um conteúdo 🌟
     - [] Seleciona questões aleatórias
