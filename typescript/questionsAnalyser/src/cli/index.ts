@@ -55,8 +55,15 @@ const perguntaDaInterface: string = `
     Adicionar um livro ao banco de dados atual - 18
     Adicionar um capitulo ao banco de dados atual - 19
     Verificar se tem questões com título repetido - 9
+    Verificar se tem livros com título repetido - 20
+    Verificar se tem Capítulos com título repetido -
     Verifica se tem novos exercícios - 10
+    Verifica se tem novos livros -
+    Verifica se tem novos capítulos -
     Adiciona questões no banco - 11
+    Adiciona livros no banco -
+    Adiciona Capítulos no banco -
+
 
 
 `
@@ -263,6 +270,51 @@ while(answer != 0){
         } else{
             console.log("Response em 19 falhou.")
         }
+    }
+
+    if(answer == 20){
+        let response = await documentValidador.verifyUniqueBooksTitles()
+        console.log("este sao os livros com títulos repetidos ou errados:", response)
+    }
+
+    if(answer == 21){
+        console.log("Adicionando novos livros...")
+        const cautela = await perguntar("Deseja adicionar com cautela? (s/n)") as string
+        if(cautela === 's'){
+            let counter = 0;
+            let questions = await documentValidador.onlyBooksTitle() 
+            for (const question of questions) {
+                const aceito = await perguntar("Deseja processar " + question + "? (s/n)")
+                if(aceito == 's'){
+                    // let savedCounter = 0;
+                    try {
+                        const content = await fileProvider.readFile(question);
+                        const filename = await fileProvider.filenameOnly(question);
+                        const parsedBook = markdownParser.parseBook(content, filename)
+                        const title = parsedBook.title
+                        // if(!indexStore.verifyBook(title)){
+                            // console.log("Questao", title, "não está no banco.")
+                            indexStore.saveBook(parsedBook)
+                            // savedCounter++;
+                        // }
+                        counter++;
+                    } catch (err) {
+                        console.log("Algo falhou no 21")
+                    }
+                } else {
+                    continue
+                }
+            }
+            console.log(counter, "questoes analisadas.")
+            // console.log(savedCounter, "questoes nao estavam no banco de dados.")
+            console.log("Tem", questions.length, "questoes arquivos no docs.")
+        } else {
+            console.log("Modo sem cautela ainda não foi implementado para adicionar livros.")
+        }
+    }
+
+    if(answer == 22){
+
     }
 }
 rl.close(); 

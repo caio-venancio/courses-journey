@@ -201,6 +201,70 @@ export class DocumentValidator {
     return response
   }
 
+  async verifyUniqueBooksTitles(): Promise<string[]>{
+    const response = []
+    const titles = await this.onlyBooksTitle()
+    const seen = new Set<string>()
+    const titleRegex = /^(.+?)(?:\s*-\s*(\d+))?(?:\s*-\s*(.+))?$/
+    for(const title of titles){
+      try{
+        
+        const matchContent = title.match(titleRegex)
+        const titleContent = matchContent?.[1]?.trim() || "not found"
+
+        if(titleContent == "not found"){
+          // console.log("este era o match content", matchContent)
+          // console.log("este era o title", title)
+          // await setTimeout(() => {}, 10000)
+          response.push(title)
+          continue
+        }
+
+        if(!seen.has(titleContent)){
+          seen.add(titleContent)
+        } else {
+          response.push(title)
+        } 
+      } catch(err){
+        console.warn(`Falha ao retornar as contabilizar ${title}`, err)
+      }
+    }
+
+    return response
+  }
+
+  async verifyUniqueChaptersTitles(): Promise<string[]>{
+    const response = []
+    const titles = await this.onlyChaptersTitle()
+    const seen = new Set<string>()
+    const titleRegex = /./
+    for(const title of titles){
+      try{
+        
+        const matchContent = title.match(titleRegex)
+        const titleContent = matchContent?.[1]?.trim() || "not found"
+
+        if(titleContent == "not found"){
+          // console.log("este era o match content", matchContent)
+          // console.log("este era o title", title)
+          // await setTimeout(() => {}, 10000)
+          response.push(title)
+          continue
+        }
+
+        if(!seen.has(titleContent)){
+          seen.add(titleContent)
+        } else {
+          response.push(titleContent)
+        } 
+      } catch(err){
+        console.warn(`Falha ao retornar as contabilizar ${title}`, err)
+      }
+    }
+
+    return response
+  }
+
   async badRegexFiles(): Promise<string[]>{
     const response = []
     const paths = await this.fileProvider.listMarkdownFiles()

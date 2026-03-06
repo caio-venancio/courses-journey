@@ -20,7 +20,9 @@ export class SqliteIndexStore implements IndexStore {
         answer TEXT,
         book_id TEXT,
         chapter INTEGER,
-        has_document BOOLEAN DEFAULT 0
+        has_document BOOLEAN DEFAULT 0,
+        FOREIGN KEY (book_id, chapter) REFERENCES chapters(book_id, number)
+          ON DELETE NO ACTION
       );
 
       CREATE TABLE IF NOT EXISTS books ( 
@@ -37,7 +39,55 @@ export class SqliteIndexStore implements IndexStore {
           number INTEGER NOT NULL,
           book_id TEXT NOT NULL,
           has_document BOOLEAN DEFAULT 0,
-          PRIMARY KEY (book_id, number)
+          PRIMARY KEY (book_id, number),
+          FOREIGN KEY (book_id) REFERENCES books(book_id)
+            ON DELETE NO ACTION
+      );
+
+      CREATE TABLE IF NOT EXISTS areas (
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL UNIQUE,
+        description TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS book_area (
+        book_id TEXT NOT NULL,
+        area_id INTEGER NOT NULL,
+
+        PRIMARY KEY(book_id, area_id),
+        FOREIGN KEY (book_id) REFERENCES books(book_id)
+          ON DELETE NO ACTION,
+        FOREIGN KEY (area_id) REFERENCES areas(id)
+          ON DELETE NO ACTION
+      );
+
+      CREATE TABLE IF NOT EXISTS subjects (
+        id INTEGER PRIMARY KEY,
+        title TEXT NOT NULL UNIQUE,
+        description TEXT
+      );
+
+      CREATE TABLE IF NOT EXISTS subject_area(
+        subject_id INTEGER NOT NULL,
+        area_id INTEGER NOT NULL,
+
+        PRIMARY KEY(subject_id, area_id),
+        FOREIGN KEY (subject_id) REFERENCES subjects(id)
+          ON DELETE NO ACTION,
+        FOREIGN KEY (area_id) REFERENCES areas(id)
+          ON DELETE NO ACTION
+      );
+
+      CREATE TABLE IF NOT EXISTS chapter_subject(
+        chapter_number INTEGER NOT NULL,
+        book_id TEXT NOT NULL,
+        subject_id INTEGER NOT NULL,
+
+        PRIMARY KEY(book_id, chapter_number, subject_id),
+        FOREIGN KEY (book_id, chapter_number) REFERENCES chapters(book_id, number)
+          ON DELETE NO ACTION,
+        FOREIGN KEY (subject_id) REFERENCES subjects(id)
+          ON DELETE NO ACTION
       );
     `);
   }
@@ -115,7 +165,14 @@ export class SqliteIndexStore implements IndexStore {
   }
 
   resetTable(): void {
+    this.db.exec("DROP TABLE IF EXISTS books;")
     this.db.exec("DROP TABLE IF EXISTS chapters;")
+    this.db.exec("DROP TABLE IF EXISTS questions;")
+    this.db.exec("DROP TABLE IF EXISTS areas;")
+    this.db.exec("DROP TABLE IF EXISTS subjects;")
+    this.db.exec("DROP TABLE IF EXISTS book_area;")
+    this.db.exec("DROP TABLE IF EXISTS subject_area;")
+    this.db.exec("DROP TABLE IF EXISTS chapter_subject;")
   }
 
   check(): void {
