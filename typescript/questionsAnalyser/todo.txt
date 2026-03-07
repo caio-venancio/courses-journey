@@ -49,14 +49,13 @@
                     - [] detecta se algum não existe
         - [X] Fazer modelagem de disciplina
         - [X] Fazer Tabela no banco de dados
-        - [] Fazer pergunta por livro
+        - [X] Fazer pergunta por livro
             - [] Acertar a ordem de adição
                 - [X] Verifica se tem livros novos
                 - [] Expulsa títulos ruins
                 - [X] Adiciona livros
                     - [X] Adicionar com cautela
-                - [] Verifica se tem capítulos novos
-                - [] Adiciona capítulos
+            - [] Resgata os livros do banck
 - [] Ver quantas questões tem de um conteúdo 🌟
     - [] Cadastra conteúdos
         - [X] Cadastra capítulos
@@ -67,6 +66,8 @@
         - [X] Fazer modelagem de disciplina
         - [X] Fazer Tabela no banco de dados
         - [] Fazer pergunta por capítulo
+                - [] Verifica se tem capítulos novos
+                - [] Adiciona capítulos
 - [] Ver quantas questões tem de um capítulo 
 - [] Exporta questões de um conteúdo 🌟
     - [] Seleciona questões aleatórias

@@ -1,6 +1,7 @@
 import type { IndexStore } from "../index/indexStore";
 import type { SearchQuery } from "../models/searchQuery";
 import type { SearchResult } from "../models/searchResult";
+import type { Book } from "../models/document";
 
 export class SearchService {
   constructor(private index: IndexStore) {}
@@ -11,5 +12,10 @@ export class SearchService {
     return this.index.search(query.text).map(doc => ({
       document: doc
     }));
+  }
+
+  getAllBooks(): Book[] {
+    
+    return this.index.findAllBooks()
   }
 }

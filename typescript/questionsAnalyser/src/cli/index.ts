@@ -64,6 +64,8 @@ const perguntaDaInterface: string = `
     Adiciona livros no banco -
     Adiciona Capítulos no banco -
 
+    Adiciona disciplinas no banco - 22
+
 
 
 `
@@ -72,6 +74,7 @@ const fileProvider = new NodeFileProvider();
 const documentValidador = new DocumentValidator(fileProvider)
 const markdownParser = new MarkdownParser()
 const indexStore = new SqliteIndexStore();
+const searchService = new SearchService(indexStore)
 
 
 let answer = 1;
@@ -314,7 +317,24 @@ while(answer != 0){
     }
 
     if(answer == 22){
+        let listOfBooks = searchService.getAllBooks()
+        for (const book of listOfBooks){
+            console.log("------", book, "-------")
+            if(book.area){
+                console.log("Este livro possui ")
+                for (const area of book.area){
+                    console.log(area)
+                }
+            } else {
+                console.log("Este livro não possui areas/disciplinas definidas.")
+            }
 
+
+            const choice = await perguntar('Você quer cadastrar disciplina para ' + book.title + '? (s/n)')
+            if(choice == 's'){
+                console.log("Estou fingindo que estou colocando!")
+            }
+        }
     }
 }
 rl.close(); 

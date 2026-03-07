@@ -138,14 +138,35 @@ export class SqliteIndexStore implements IndexStore {
     }
   }
 
-
-
   search(query: string): Document[] {
     return this.db.prepare(`
       SELECT * FROM documents
       WHERE content LIKE ?
     `).all(`%${query}%`) as Document[];
   }
+
+findAllBooks(): Book[] {
+  const stmt = this.db.prepare(`
+    SELECT  
+      b.title,
+      b.book_id,
+      b.edition,
+      json_group_array(a.title) as areas,
+      b.has_document
+    FROM books b
+    LEFT JOIN book_area ba ON b.book_id = ba.book_id
+    LEFT JOIN areas a ON ba.area_id = a.id
+    GROUP BY b.book_id
+  `)
+
+  return stmt.all().map((r: any) => ({
+    title: r.title,
+    bookId: r.book_id,
+    edition: r.edition,
+    areas: r.areas ? JSON.parse(r.areas) : [],
+    hasDocument: r.has_document
+  })) as Book[]
+}
 
   verifyQuestion(questionTitle: string): boolean {
     try {

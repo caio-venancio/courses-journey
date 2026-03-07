@@ -6,7 +6,9 @@ export interface IndexStore {
   saveBook(book: Book): void;
   saveChapter(chapter: Chapter): void;
   search(query: string): Document[];
+  findAllBooks(): Book[];
   verifyQuestion(questionTitle: string): boolean 
+  
   clear(): void;
   check(): void;
 }
