@@ -299,6 +299,41 @@ TopoDS_Shape MakeHalfCylinder(const Standard_Real myWidth, const Standard_Real m
     return halfCylinder;
 }
 
+TopoDS_Shape MakeLoftCylinder(const Standard_Real radius, const Standard_Real myHeight){
+    // 1. Definir o sistema de coordenadas do círculo (Posição e Direção)
+    gp_Pnt center_pnt(0,0,0);
+    gp_Dir normal_dir(0,0,1);
+    gp_Ax2 axis(center_pnt, normal_dir);
+    // # 2. Criar a geometria do círculo (gp_Circ)
+    gp_Circ circle_geom(axis, radius);
+    // # 3. Criar a aresta (Edge) a partir do círculo
+    TopoDS_Edge edge = BRepBuilderAPI_MakeEdge(circle_geom).Edge();
+    // # 4. Criar o wire a partir da aresta
+    TopoDS_Wire wire1 = BRepBuilderAPI_MakeWire(edge).Wire();
+
+    gp_Pnt center_pnt2(0,0,0 + myHeight);
+    gp_Dir normal_dir2(0,0,1);
+    gp_Ax2 axis2(center_pnt2, normal_dir2);
+    // # 2. Criar a geometria do círculo (gp_Circ)
+    gp_Circ circle_geom2(axis2, radius);
+    // # 3. Criar a aresta (Edge) a partir do círculo
+    TopoDS_Edge edge2 = BRepBuilderAPI_MakeEdge(circle_geom2).Edge();
+    // # 4. Criar o wire a partir da aresta
+    TopoDS_Wire wire2 = BRepBuilderAPI_MakeWire(edge2).Wire();
+    
+    // 2. Inicializar algoritmo (True para sólido, False para shell)
+    BRepOffsetAPI_ThruSections loftGenerator(Standard_True);
+    
+    // 3. Adicionar as seções
+    loftGenerator.AddWire(wire1);
+    loftGenerator.AddWire(wire2);
+    
+    // 4. Construir o loft
+    loftGenerator.Build();
+    TopoDS_Shape loftShape = loftGenerator.Shape();
+    return loftShape;
+}
+
 
 int main(){
     // TopoDS_Shape Garrafa = MakeBottle(50, 70, 30);
@@ -306,13 +341,15 @@ int main(){
     TopoDS_Shape Cubo = MakeCube(10,10,10);
     TopoDS_Shape MeioCilindro = MakeHalfCylinder(10, 10);
     // TopoDS_Shape Rosca = MakeThreadedCylinder(10, 10);
+    TopoDS_Shape CilindroLoft = MakeLoftCylinder(10, 10);
 
     std::cout << "Cilindro?:" << hasCylinder(Cilindro) << std::endl; //Positivo verdadeiro
     std::cout << "Cilindro?:" << hasCylinder(Cubo) << std::endl; //Negativo verdadeiro
     std::cout << "Cilindro?:" << hasCylinder(MeioCilindro) << std::endl; //Falso positivo
+    std::cout << "Cilindro?:" << hasCylinder(CilindroLoft) << std::endl; //Falso negativo
 
     // STEPControl_Writer writer;
-    // writer.Transfer(Rosca, STEPControl_AsIs);
+    // writer.Transfer(CilindroLoft, STEPControl_AsIs);
     // writer.Write("RoscaOC.step");
 
     return 0;
