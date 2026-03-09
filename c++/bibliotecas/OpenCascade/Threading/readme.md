@@ -1,5 +1,6 @@
 cmake -B build -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config release
+.\build\Release\Bottle.exe
 
 ------------ todo -------------------
 - [] Detectar cilindros por Geom_CylindricalSurface para cilindros comuns

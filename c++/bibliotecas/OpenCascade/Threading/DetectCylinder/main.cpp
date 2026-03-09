@@ -15,6 +15,7 @@
 #include <BRepBuilderAPI_Transform.hxx>
 #include <BRepPrimAPI_MakePrism.hxx>
 #include <BRepPrimAPI_MakeCylinder.hxx>
+#include <BRepPrimAPI_MakeBox.hxx>
 #include <BRepFilletAPI_MakeFillet.hxx>
 #include <TopExp_Explorer.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
@@ -270,13 +271,30 @@ bool hasCylinder(const TopoDS_Shape& shape)
     return false;
 }
 
+TopoDS_Shape MakeCube(const Standard_Real myWidth, const Standard_Real myHeight, const Standard_Real myDepth){
+
+    gp_Pnt cubeLocation(0, 0, 0);
+    gp_Dir cubeAxis = gp::DZ();
+    gp_Ax2 cubeAx2(cubeLocation, cubeAxis);
+
+    Standard_Real myCubeWidth= myWidth;
+    Standard_Real myCubeHeight = myHeight;
+    Standard_Real myCubeDepth = myDepth;
+    BRepPrimAPI_MakeBox FunnyName(cubeAx2, myCubeWidth, myCubeHeight, myCubeDepth);
+    TopoDS_Shape myCube = FunnyName.Shape();
+
+    return myCube;
+}
+
 
 int main(){
     // TopoDS_Shape Garrafa = MakeBottle(50, 70, 30);
     TopoDS_Shape Cilindro = MakeCylinder(10, 10);
+    TopoDS_Shape Cubo = MakeCube(10,10,10);
     // TopoDS_Shape Rosca = MakeThreadedCylinder(10, 10);
 
     std::cout << "Cilindro?:" << hasCylinder(Cilindro) << std::endl;
+    std::cout << "Cilindro?:" << hasCylinder(Cubo) << std::endl;
 
     // STEPControl_Writer writer;
     // writer.Transfer(Rosca, STEPControl_AsIs);
