@@ -19,6 +19,7 @@
 #include <BRepFilletAPI_MakeFillet.hxx>
 #include <TopExp_Explorer.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
+#include <BRepAlgoAPI_Cut.hxx>
 #include <BRep_Tool.hxx>
 #include <Geom_Plane.hxx>
 #include <Geom_CylindricalSurface.hxx>
@@ -286,15 +287,29 @@ TopoDS_Shape MakeCube(const Standard_Real myWidth, const Standard_Real myHeight,
     return myCube;
 }
 
+TopoDS_Shape MakeHalfCylinder(const Standard_Real myWidth, const Standard_Real myHeight){
+
+    TopoDS_Shape cylinder = MakeCylinder(myWidth, myHeight);
+
+    TopoDS_Shape cutter = BRepPrimAPI_MakeBox(gp_Pnt(0, -myWidth, 0), myWidth, 2 * myWidth, myHeight).Shape();
+
+    // 3. Realizar o Corte (Cilindro - Caixa)
+    TopoDS_Shape halfCylinder = BRepAlgoAPI_Cut(cylinder, cutter).Shape();
+
+    return halfCylinder;
+}
+
 
 int main(){
     // TopoDS_Shape Garrafa = MakeBottle(50, 70, 30);
     TopoDS_Shape Cilindro = MakeCylinder(10, 10);
     TopoDS_Shape Cubo = MakeCube(10,10,10);
+    TopoDS_Shape MeioCilindro = MakeHalfCylinder(10, 10);
     // TopoDS_Shape Rosca = MakeThreadedCylinder(10, 10);
 
-    std::cout << "Cilindro?:" << hasCylinder(Cilindro) << std::endl;
-    std::cout << "Cilindro?:" << hasCylinder(Cubo) << std::endl;
+    std::cout << "Cilindro?:" << hasCylinder(Cilindro) << std::endl; //Positivo verdadeiro
+    std::cout << "Cilindro?:" << hasCylinder(Cubo) << std::endl; //Negativo verdadeiro
+    std::cout << "Cilindro?:" << hasCylinder(MeioCilindro) << std::endl; //Falso positivo
 
     // STEPControl_Writer writer;
     // writer.Transfer(Rosca, STEPControl_AsIs);
