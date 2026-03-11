@@ -7,7 +7,8 @@
         "C:/Qt/6.10.1/mingw_64/include",
         "C:/Qt/6.10.1/mingw_64/include/QtWidgets",
         "C:/Qt/6.10.1/mingw_64/include/QtGui",
-        "C:/Qt/6.10.1/mingw_64/include/QtCore"
+        "C:/Qt/6.10.1/mingw_64/include/QtCore",
+        "C:/opencascade-7.9.3-vc14-64/inc"
       ],      
       "compilerPath": "C:/Qt/Tools/mingw1310_64/bin/g++.exe",
       "cStandard": "c17",
