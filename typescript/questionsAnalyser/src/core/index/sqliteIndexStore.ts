@@ -1,6 +1,9 @@
 import Database from "better-sqlite3";
 import type { Book, Document, Question, Chapter } from "../models/document";
 import type { IndexStore } from "./indexStore";
+import type { Subject, Area } from "../models/academic";
+
+const debug = true;
 
 export class SqliteIndexStore implements IndexStore {
   private db = new Database("index.db");
@@ -119,10 +122,18 @@ export class SqliteIndexStore implements IndexStore {
       VALUES (?, ?, ?, ?)
     `).run(book.title, book.bookId, book.edition, book.hasDocument);
     } catch (err) {
-      console.warn('erro eh este:', err)
-      console.log('-----------------------------------')
-      console.log('A questao que deu erro:', book)
+      if(debug){
+        console.warn('erro eh este:', err)
+        console.log('-----------------------------------')
+        console.log('O livro que deu erro:', book)
+      }
     }
+
+    if(book.area){}
+    if(book.authors){}
+    if(book.chapters){}
+    if(book.subjects){}
+    if(book.topic){}
   }
 
   saveChapter(chapter: Chapter): void {
@@ -136,6 +147,44 @@ export class SqliteIndexStore implements IndexStore {
       console.log('-----------------------------------')
       console.log('A questao que deu erro:', chapter)
     }
+
+    if(chapter.activities){}
+    if(chapter.area){}
+    if(chapter.subjects){}
+    if(chapter.topic){}
+  }
+
+  saveSubject(subject: Subject): void {
+    try {
+      this.db.prepare(`
+      INSERT INTO subjects (title)
+      VALUES (?)
+    `).run(subject.title);
+    } catch (err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('O conteúdo que deu erro:', subject)
+    }
+
+    if(subject.area){/*Salva areas se foi passado.*/}
+    if(subject.description){/*Salva description se foi passado.*/}
+    if(subject.examination){/*Salva examinations se foi passado.*/}
+  }
+
+  saveArea(area: Area): void {
+    try {
+      this.db.prepare(`
+      INSERT INTO areas (title)
+      VALUES (?)
+    `).run(area.title);
+    } catch (err) {
+      console.warn('erro eh este:', err)
+      console.log('-----------------------------------')
+      console.log('A area que deu erro:', area)
+    }
+
+    if(area.description){/*Salva description se foi passado*/}
+    if(area.examination){/*Salva examinações se não foram salvos ainda*/}
   }
 
   search(query: string): Document[] {
