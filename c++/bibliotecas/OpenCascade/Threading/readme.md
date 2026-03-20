@@ -14,6 +14,9 @@ cmake --build build --config release
     - [] Definir quais detalhes são necessários
 
 - [] Fazer Thread interna
+- [] Fazer extractCylinder
+- [] Fazer CurvatureCheck
+- [] Fazer DetectFullCylinder
 
 ------------ Perguntas --------------
 Em ThreadCylinder, quais informções sobre o cilindro foram necessárias para fazer a thread?
