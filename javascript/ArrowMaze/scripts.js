@@ -1,5 +1,7 @@
 console.log("Iniciando agora.")
 
+import { drawGrid } from "./draw.js";
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
@@ -9,18 +11,7 @@ canvas.height = 400;
 
 const rows = 5;
 const cols = 5;
-const cellSize = 80;
-
-function drawGrid() {
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      const x = j * cellSize;
-      const y = i * cellSize;
-
-      ctx.strokeRect(x, y, cellSize, cellSize);
-    }
-  }
-}
+let cellSize = 80;
 
 function loop() {
     //   update(); // lógica
@@ -28,10 +19,8 @@ function loop() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawGrid();
+  drawGrid(rows, cols, cellSize, ctx);
   //   drawArrows();
-
-  //   requestAnimationFrame(loop);
 
   requestAnimationFrame(loop);
 }
@@ -45,26 +34,7 @@ function update() {
   }
 }
 
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawGrid();
-  drawArrows();
-  drawAnimation();
-}
-
-function drawArrows(){}
-function drawAnimation(){}
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  cellSize = Math.min(
-    canvas.width / cols,
-    canvas.height / rows
-  );
-}
-
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+// task: importar resize.js e adicionar ele como módulo
+// window.addEventListener("resize", resizeCanvas);
+// resizeCanvas();
