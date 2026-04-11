@@ -1,9 +1,36 @@
 console.log("Iniciando agora.")
 
-import { drawGrid, drawArrows } from "./draw.js";
+import { drawGrid, drawArrows} from "./draw.js";
+
+let selectedCell;
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+canvas.addEventListener("click", handleClick);
+
+function drawSelection() {
+  if (!selectedCell) return;
+
+  const { i, j } = selectedCell;
+
+  const x = j * cellSize;
+  const y = i * cellSize;
+
+  ctx.fillStyle = "rgba(0, 150, 255, 0.3)";
+  ctx.fillRect(x, y, cellSize, cellSize);
+}
+
+function handleClick(event) {
+  const rect = canvas.getBoundingClientRect();
+
+  const px = event.clientX - rect.left;
+  const py = event.clientY - rect.top;
+
+  const j = Math.floor(px / cellSize);
+  const i = Math.floor(py / cellSize);
+
+  selectedCell = { i, j };
+}
 
 // tamanho inicial
 canvas.width = 400;
@@ -27,6 +54,7 @@ function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawGrid(rows, cols, cellSize, ctx);
+  drawSelection();
   drawArrows(ctx, grid, cellSize);
 
   requestAnimationFrame(loop);
@@ -40,6 +68,8 @@ function update() {
     animation.progress += 0.05;
   }
 }
+
+
 
 
 // task: importar resize.js e adicionar ele como módulo
