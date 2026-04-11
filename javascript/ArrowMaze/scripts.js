@@ -1,6 +1,6 @@
 console.log("Iniciando agora.")
 
-import { drawGrid } from "./draw.js";
+import { drawGrid, drawArrows } from "./draw.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -13,6 +13,13 @@ const rows = 5;
 const cols = 5;
 let cellSize = 80;
 
+let directionOption = ["UP", "DOWN", "LEFT", "RIGHT"]
+let grid = Array.from({ length: rows }, () =>
+  Array.from({ length: cols }, () => ({
+    direction: directionOption[Math.floor(Math.random() * 4)]
+  }))
+);
+
 function loop() {
     //   update(); // lógica
     //   draw();   // desenho
@@ -20,7 +27,7 @@ function loop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawGrid(rows, cols, cellSize, ctx);
-  //   drawArrows();
+  drawArrows(ctx, grid, cellSize);
 
   requestAnimationFrame(loop);
 }
