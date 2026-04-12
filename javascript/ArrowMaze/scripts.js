@@ -1,6 +1,6 @@
 console.log("Iniciando agora.")
 
-import { drawGrid, drawArrows, drawArrowShape} from "./draw.js";
+import { drawGrid, drawArrows, drawArrowShape, getLineBlocking} from "./draw.js";
 
 let selectedCell;
 
@@ -21,6 +21,14 @@ function drawSelection() {
 }
 
 let movingSquares = [];
+
+// tamanho inicial
+canvas.width = 600;
+canvas.height = 600;
+
+const rows = 5;
+const cols = 5;
+let cellSize = 80;
 
 function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
@@ -44,25 +52,19 @@ function handleClick(event) {
   if (dir === "DOWN") dy = speed;
   if (dir === "UP") dy = -speed;
 
-  if(grid[i][j].active){
+  if(getLineBlocking(i,j,rows,cols,grid)){
+    // TriggerShake()
+  } else if(grid[i][j].active){
     movingSquares.push({
       x: j * cellSize,
       y: i * cellSize,
       dx,
       dy
     });
+    grid[i][j].active = false
   }
 
-  grid[i][j].active = false
 }
-
-// tamanho inicial
-canvas.width = 600;
-canvas.height = 600;
-
-const rows = 5;
-const cols = 5;
-let cellSize = 80;
 
 let directionOption = ["UP", "DOWN", "LEFT", "RIGHT"]
 let grid = Array.from({ length: rows }, () =>

@@ -4,13 +4,69 @@ export function drawGrid(rows, cols, grid, cellSize, ctx) {
       const x = j * cellSize;
       const y = i * cellSize;
 
-      if(!grid[i][j].active) ctx.strokeStyle = "rgb(211, 211, 211)"; 
 
+      if(!grid[i][j].active) ctx.strokeStyle = "rgb(211, 211, 211)"; 
 
       ctx.strokeRect(x, y, cellSize, cellSize);
       ctx.strokeStyle = "black"; 
     }
   }
+}
+
+function getNextCell(i, j, direction) {
+  if (direction === "RIGHT") return [i, j + 1];
+  if (direction === "LEFT")  return [i, j - 1];
+  if (direction === "DOWN")  return [i + 1, j];
+  if (direction === "UP")    return [i - 1, j];
+}
+
+export function getLineBlocking(i, j, rows, cols, grid){
+  const cell = grid[i][j];
+
+  // if (cell && cell.active){
+    console.log("Tentando ver")
+    const direction = cell.direction
+
+    if (direction === "RIGHT") {
+      for (let k = j + 1; k < cols; k++) {
+        if (grid[i][k]?.active) {
+          return true;
+        }
+      }
+    }
+
+    if (direction === "LEFT") {
+      for (let k = j - 1; k >= 0; k--) {
+        if (grid[i][k]?.active) {
+          return true;
+        }
+      }
+    }
+
+    if (direction === "DOWN") {
+      for (let k = i + 1; k < rows; k++) {
+        if (grid[k][j]?.active) {
+          return true;
+        }
+      }
+    }
+
+    if (direction === "UP") {
+      for (let k = i - 1; k >= 0; k--) {
+        if (grid[k][j]?.active) {
+          return true;
+        }
+      }
+    }
+  // }
+  return false;
+}
+
+function triggerShake(square) {
+  square.shake = {
+    time: 0,
+    duration: 300
+  };
 }
 
 function draw() {
