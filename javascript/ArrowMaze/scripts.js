@@ -1,6 +1,6 @@
 console.log("Iniciando agora.")
 
-import { drawGrid, drawArrows} from "./draw.js";
+import { drawGrid, drawArrows, drawArrowShape} from "./draw.js";
 
 let selectedCell;
 
@@ -20,6 +20,8 @@ function drawSelection() {
   ctx.fillRect(x, y, cellSize, cellSize);
 }
 
+let movingSquares = [];
+
 function handleClick(event) {
   const rect = canvas.getBoundingClientRect();
 
@@ -30,11 +32,33 @@ function handleClick(event) {
   const i = Math.floor(py / cellSize);
 
   selectedCell = { i, j };
+
+  const dir = grid[i][j].direction;
+
+  const speed = 3;
+
+  let dx = 0, dy = 0;
+
+  if (dir === "RIGHT") dx = speed;
+  if (dir === "LEFT") dx = -speed;
+  if (dir === "DOWN") dy = speed;
+  if (dir === "UP") dy = -speed;
+
+  if(grid[i][j].active){
+    movingSquares.push({
+      x: j * cellSize,
+      y: i * cellSize,
+      dx,
+      dy
+    });
+  }
+
+  grid[i][j].active = false
 }
 
 // tamanho inicial
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 600;
+canvas.height = 600;
 
 const rows = 5;
 const cols = 5;
@@ -43,19 +67,51 @@ let cellSize = 80;
 let directionOption = ["UP", "DOWN", "LEFT", "RIGHT"]
 let grid = Array.from({ length: rows }, () =>
   Array.from({ length: cols }, () => ({
-    direction: directionOption[Math.floor(Math.random() * 4)]
+    direction: directionOption[Math.floor(Math.random() * 4)],
+    active: true
   }))
 );
 
+function getAngle(dx, dy) {
+  return Math.atan2(dy, dx);
+}
+
+function drawMovingSquares() {
+  // ctx.fillStyle = "red";
+
+  for (let s of movingSquares) {
+    ctx.strokeRect(s.x, s.y, cellSize, cellSize);
+    // ctx.fillRect(s.x, s.y, cellSize, cellSize);
+    // 🏹 seta
+    const angle = getAngle(s.dx, s.dy);
+
+    ctx.save();
+
+    // centro do quadrado
+    ctx.translate(
+      s.x + cellSize / 2,
+      s.y + cellSize / 2
+    );
+
+    ctx.rotate(angle);
+
+    ctx.fillStyle = "white";
+    drawArrowShape(ctx, cellSize);
+
+    ctx.restore();
+  }
+}
+
 function loop() {
-    //   update(); // lógica
-    //   draw();   // desenho
+  update(); // lógica
+  //   draw();   // desenho
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawGrid(rows, cols, cellSize, ctx);
+  drawGrid(rows, cols, grid, cellSize, ctx);
   drawSelection();
   drawArrows(ctx, grid, cellSize);
+  drawMovingSquares();
 
   requestAnimationFrame(loop);
 }
@@ -63,10 +119,18 @@ function loop() {
 loop();
 
 function update() {
-  // aqui você atualiza animações
-  if (animation) {
-    animation.progress += 0.05;
+  for (let square of movingSquares) {
+    square.x += square.dx;
+    square.y += square.dy;
   }
+
+  // remover os que saíram da tela
+  movingSquares = movingSquares.filter(s =>
+    s.x + cellSize > 0 &&
+    s.x < canvas.width &&
+    s.y + cellSize > 0 &&
+    s.y < canvas.height
+  );
 }
 
 
