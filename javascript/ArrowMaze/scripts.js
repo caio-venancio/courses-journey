@@ -25,12 +25,20 @@ let movingSquares = [];
 // tamanho inicial
 canvas.width = 600;
 canvas.height = 600;
-
 const rows = 5;
 const cols = 5;
 let cellSize = 80;
+// para o tempo
+let startTime = null;
+let elapsedTime = 0;
+let gameRunning = false;
+// para a quantidade de jogadas
+let moves = 0;
 
 function handleClick(event) {
+  if (!gameRunning) return;
+
+  
   const rect = canvas.getBoundingClientRect();
 
   const px = event.clientX - rect.left;
@@ -40,6 +48,7 @@ function handleClick(event) {
   const i = Math.floor(py / cellSize);
 
   selectedCell = { i, j };
+  moves++;
 
   const dir = grid[i][j].direction;
 
@@ -104,8 +113,8 @@ function drawMovingSquares() {
   }
 }
 
-function loop() {
-  update(); // lógica
+function loop(time) {
+  update(time); // lógica
   //   draw();   // desenho
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -114,13 +123,22 @@ function loop() {
   drawSelection();
   drawArrows(ctx, grid, cellSize);
   drawMovingSquares();
+  drawUI();
+  drawEndScreen();
 
   requestAnimationFrame(loop);
 }
 
-loop();
+requestAnimationFrame(loop);
+// loop();
 
-function update() {
+if (!gameRunning) startGame();
+
+function update(time) {
+  if (gameRunning) {
+    elapsedTime = time - startTime;
+  }
+
   for (let square of movingSquares) {
     square.x += square.dx;
     square.y += square.dy;
@@ -135,7 +153,45 @@ function update() {
   );
 }
 
+function startGame() {
+  startTime = performance.now();
+  gameRunning = true;
+}
 
+function drawUI() {
+  const seconds = (elapsedTime / 1000).toFixed(2);
+  ctx.fillText(`Tempo: ${seconds}s`, 10, 20);
+
+  ctx.fillText(`Jogadas: ${moves}`, 10, 40);
+}
+
+function isGameFinished() {
+  return grid.every(row =>
+    row.every(cell => !cell.active)
+  );
+}
+
+function endGame() {
+  gameRunning = false;
+}
+
+function calculateScore() {
+  const timeScore = Math.max(0, 1000 - elapsedTime / 10);
+  const moveScore = Math.max(0, 500 - moves * 10);
+
+  return Math.floor(timeScore + moveScore);
+}
+
+function drawEndScreen() {
+  if (gameRunning) return;
+
+  ctx.fillStyle = "black";
+  ctx.fillText("Fim de jogo!", 150, 150);
+
+  const score = calculateScore();
+
+  ctx.fillText(`Score: ${score}`, 150, 180);
+}
 
 
 // task: importar resize.js e adicionar ele como módulo
