@@ -136,6 +136,15 @@ def _connect_to_central():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((CENTRAL_HOST, CENTRAL_PORT))
             s.settimeout(5.0)
+
+            # Handshake
+            hello = {
+                "type": "hello",
+                "intersection": INTERSECTION_ID
+            }
+
+            s.sendall(protocol.encode(hello))
+            
             print(f"[NET] Conectado ao Central em {CENTRAL_HOST}:{CENTRAL_PORT}")
             with _central_lock:
                 _central_socket = s
