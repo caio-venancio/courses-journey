@@ -49,9 +49,19 @@ CAMERA_ADDRESSES = {1: 0x11, 2: 0x12, 3: 0x13, 4: 0x14}
 
 _lock = threading.Lock()
 
-# Por sensor_id (1–4): {"count": int, "speeds": deque(maxlen=20)}
+# Por sensor_id (1–4):
+#   "count"      → total acumulado de veículos (persistido)
+#   "speeds"     → últimas velocidades para cálculo da média (km/h)
+#   "timestamps" → instantes (monotonic) das últimas passagens, janela de 60 s
+FLOW_WINDOW_S = 60.0   # janela deslizante para cálculo de carros/min
+
 traffic: dict[int, dict] = {
-    i: {"count": 0, "speeds": deque(maxlen=20)} for i in range(1, 5)
+    i: {
+        "count":      0,
+        "speeds":     deque(maxlen=20),
+        "timestamps": deque(),          # sem maxlen — purgamos por tempo
+    }
+    for i in range(1, 5)
 }
 
 fines: list[dict] = []           # lista de multas (persistente)
@@ -399,11 +409,12 @@ def _handle_dist_message(msg: dict):
         timestamp    = msg.get("timestamp", datetime.now(timezone.utc).isoformat())
         with _lock:
             traffic[sensor_id]["speeds"].append(speed_kmh)
+            # speed_alert equivale a uma passagem — registra instante
+            traffic[sensor_id]["timestamps"].append(time.monotonic())
         _log_event(
             f"[ALERTA] Cruzamento {intersection} sensor {sensor_id} "
             f"— {speed_kmh} km/h"
         )
-        # Acionar câmera em thread separada para não bloquear recepção
         threading.Thread(
             target=_trigger_camera,
             args=(sensor_id, speed_kmh, intersection, timestamp),
@@ -412,11 +423,20 @@ def _handle_dist_message(msg: dict):
 
     elif mtype == "traffic_count":
         counts = msg.get("counts", {})
+        now = time.monotonic()
         with _lock:
             for sid_str, cnt in counts.items():
                 sid = int(sid_str)
-                if sid in traffic:
-                    traffic[sid]["count"] = cnt
+                if sid not in traffic:
+                    continue
+                prev      = traffic[sid]["count"]
+                new_total = int(cnt)
+                # Quantos veículos novos desde o último relatório?
+                new_vehicles = max(0, new_total - prev)
+                traffic[sid]["count"] = new_total
+                # Injeta um timestamp por veículo novo na janela deslizante
+                for _ in range(new_vehicles):
+                    traffic[sid]["timestamps"].append(now)
 
 
 def _send_to_dist(intersection_id: int, msg: dict):
@@ -462,10 +482,18 @@ def _avg_speed(sensor_id: int) -> str:
 
 
 def _flow(sensor_id: int) -> str:
-    """Estima carros/min com base no total acumulado (simplificado)."""
+    """Retorna a taxa de tráfego em carros/min usando janela deslizante de 60 s."""
+    now = time.monotonic()
+    cutoff = now - FLOW_WINDOW_S
     with _lock:
-        cnt = traffic[sensor_id]["count"]
-    return str(cnt)
+        ts_deque = traffic[sensor_id]["timestamps"]
+        # Purgar entradas fora da janela (deque é ordenado por inserção)
+        while ts_deque and ts_deque[0] < cutoff:
+            ts_deque.popleft()
+        count_in_window = len(ts_deque)
+    # Escala para carros/min (a janela tem FLOW_WINDOW_S segundos)
+    rate = count_in_window * (60.0 / FLOW_WINDOW_S)
+    return f"{rate:.1f}"
 
 
 def _run_ui(stdscr):
@@ -525,10 +553,10 @@ def _run_ui(stdscr):
         row += 1
 
         # Tabela de sensores
-        write(row, 0, f"  {'Sensor':<8} {'Cruzamento':<12} {'Veículos':<12} "
-                      f"{'Vel. Média':<12} {'Online':<8}")
+        write(row, 0, f"  {'Sensor':<8} {'Cruzamento':<12} {'Fluxo(c/min)':<14} "
+                      f"{'Total':<8} {'Vel. Média':<12} {'Online':<6}")
         row += 1
-        write(row, 0, "  " + "─" * 50)
+        write(row, 0, "  " + "─" * 56)
         row += 1
 
         with _dist_lock:
@@ -536,12 +564,14 @@ def _run_ui(stdscr):
 
         for sid in range(1, 5):
             iid   = 1 if sid <= 2 else 2
-            cnt   = _flow(sid)
+            flow  = _flow(sid)
+            with _lock:
+                total = traffic[sid]["count"]
             avg   = _avg_speed(sid)
             conn  = "✓" if online.get(iid) else "✗"
             attr  = curses.color_pair(1) if online.get(iid) else curses.color_pair(3)
             write(row, 0,
-                  f"  {sid:<8} {iid:<12} {cnt:<12} {avg + ' km/h':<12} {conn:<8}",
+                  f"  {sid:<8} {iid:<12} {flow:<14} {total:<8} {avg + ' km/h':<12} {conn:<6}",
                   attr)
             row += 1
 

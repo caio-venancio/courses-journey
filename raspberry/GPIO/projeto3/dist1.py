@@ -2,26 +2,20 @@
 """
 dist1.py — Servidor Distribuído: Cruzamento 1
 
-Responsabilidades:
-  • Controla semáforos via GPIO (código 3 bits)
-  • Lê botões de pedestre com debounce
-  • Mede velocidade dos veículos via sensores A/B
-  • Envia speed_alert ao Central quando v > 60 km/h
-  • Envia traffic_count ao Central a cada 2 s
-  • Obedece comandos night_mode, emergency_mode e manual_signal
-
-Configuração: veja as constantes abaixo ou passe variáveis de ambiente.
+Lê toda a configuração de hardware de config.json (mesmo diretório).
+Após conectar ao Central, envia handshake {"type":"hello","intersection":N}.
+Reporta contagem acumulada por sensor a cada 2 s via traffic_count.
 """
 
 import os
 import sys
+import json
 import socket
 import threading
-import json
 import time
+from collections import deque
 from datetime import datetime, timezone
 
-# ── caminho do módulo compartilhado ───────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "shared"))
 import protocol  # noqa: E402
 
@@ -40,42 +34,36 @@ except RuntimeError:
     GPIO.RISING = 31
 
 # ======================================================================
-# CONFIGURAÇÃO — Cruzamento 1
+# CONFIGURAÇÃO — lida de config.json
 # ======================================================================
 
-INTERSECTION_ID = 1
+_CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config_dist1.json")
 
-# Semáforo (saída RPi → ESP32)
-SIGNAL_BIT0 = 17
-SIGNAL_BIT1 = 18
-SIGNAL_BIT2 = 23
-SIGNAL_PINS  = [SIGNAL_BIT0, SIGNAL_BIT1, SIGNAL_BIT2]
+def _load_config() -> dict:
+    with open(_CONFIG_FILE) as f:
+        return json.load(f)
 
-# Botões de pedestre (entrada ESP32 → RPi)
-BTN_MAIN  = 1
-BTN_CROSS = 12
+cfg = _load_config()
 
-# Sensores de velocidade
-SENSOR1_A = 16
-SENSOR1_B = 20
-SENSOR2_A = 21
-SENSOR2_B = 27
+INTERSECTION_ID  = cfg["intersection_id"]
+CENTRAL_HOST     = cfg["central_host"]
+CENTRAL_PORT     = cfg["central_port"]
+SIGNAL_PINS      = cfg["signal_pins"]           # [bit0, bit1, bit2]
+BTN_MAIN         = cfg["btn_main"]
+BTN_CROSS        = cfg["btn_cross"]
+SENSORS_CFG      = cfg["sensors"]               # [{sensor_id, pin_a, pin_b}, ...]
 
-# TCP — Servidor Central
-CENTRAL_HOST = os.environ.get("CENTRAL_HOST", "127.0.0.1")
-CENTRAL_PORT  = int(os.environ.get("CENTRAL_PORT", "9000"))
-
-# Temporização dos semáforos (segundos)
-MAIN_GREEN_MIN  = 15
-MAIN_GREEN_MAX  = 30
-CROSS_GREEN_MIN = 5
-CROSS_GREEN_MAX = 10
-YELLOW_DURATION = 3
+# Temporização dos semáforos (s) — conforme Tabela 5 do enunciado
+MAIN_GREEN_MIN   = 15
+MAIN_GREEN_MAX   = 30
+CROSS_GREEN_MIN  = 5
+CROSS_GREEN_MAX  = 10
+YELLOW_DURATION  = 3
 ALL_RED_DURATION = 2
 
-SPEED_LIMIT_KMH = 60.0
-SENSOR_DISTANCE_M = 2.0
-DEBOUNCE_S = 0.2
+SPEED_LIMIT_KMH        = 60.0
+SENSOR_DISTANCE_M      = 2.0
+DEBOUNCE_S             = 0.2
 TRAFFIC_REPORT_INTERVAL = 2.0   # s
 
 # ======================================================================
@@ -85,8 +73,9 @@ TRAFFIC_REPORT_INTERVAL = 2.0   # s
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(SIGNAL_PINS, GPIO.OUT)
 GPIO.setup([BTN_MAIN, BTN_CROSS], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup([SENSOR1_A, SENSOR1_B, SENSOR2_A, SENSOR2_B],
-           GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+for _s in SENSORS_CFG:
+    GPIO.setup([_s["pin_a"], _s["pin_b"]], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # ======================================================================
 # ESTADO COMPARTILHADO
@@ -95,20 +84,17 @@ GPIO.setup([SENSOR1_A, SENSOR1_B, SENSOR2_A, SENSOR2_B],
 _lock = threading.Lock()
 
 state = {
-    # semáforo
-    "signal_code": 1,         # código 3-bits atual
-    "night_mode": False,
-    "emergency_active": False,
-    "emergency_signal_group": 0,
-    "manual_override": False,
-    "manual_code": 0,
-    # pedestre
-    "btn_main_pressed": False,
-    "btn_cross_pressed": False,
-    # velocidade / contagem
-    "counts": {1: 0, 2: 0},   # sensor_id → contagem total
-    "sensor1_a_time": None,
-    "sensor2_a_time": None,
+    "night_mode":              False,
+    "emergency_active":        False,
+    "emergency_signal_group":  0,
+    "manual_override":         False,
+    "manual_code":             0,
+    "btn_main_pressed":        False,
+    "btn_cross_pressed":       False,
+    # sensor_id → contagem absoluta de veículos
+    "counts": {s["sensor_id"]: 0 for s in SENSORS_CFG},
+    # sensor_id → monotonic() do último pulso A (para cálculo de Δt)
+    "sensor_a_times": {s["sensor_id"]: None for s in SENSORS_CFG},
 }
 
 _central_socket: socket.socket | None = None
@@ -124,12 +110,12 @@ def write_signal(code: int):
     b2 = (code >> 2) & 1
     GPIO.output(SIGNAL_PINS, (b0, b1, b2))
 
-
 # ======================================================================
 # COMUNICAÇÃO COM O CENTRAL
 # ======================================================================
 
 def _connect_to_central():
+    """Reconecta indefinidamente ao Central. Envia hello após conectar."""
     global _central_socket
     while True:
         try:
@@ -137,18 +123,15 @@ def _connect_to_central():
             s.connect((CENTRAL_HOST, CENTRAL_PORT))
             s.settimeout(5.0)
 
-            # Handshake
-            hello = {
-                "type": "hello",
-                "intersection": INTERSECTION_ID
-            }
-
+            # ── Handshake ────────────────────────────────────────────
+            hello = {"type": "hello", "intersection": INTERSECTION_ID}
             s.sendall(protocol.encode(hello))
-            
-            print(f"[NET] Conectado ao Central em {CENTRAL_HOST}:{CENTRAL_PORT}")
+            print(f"[NET] Conectado e hello enviado (cruzamento {INTERSECTION_ID})")
+
             with _central_lock:
                 _central_socket = s
             _receive_loop(s)
+
         except (ConnectionRefusedError, OSError) as e:
             print(f"[NET] Falha ao conectar: {e} — tentando novamente em 3 s")
             time.sleep(3)
@@ -171,7 +154,11 @@ def _receive_loop(sock: socket.socket):
                 msg = protocol.decode(line)
                 if msg:
                     _handle_command(msg)
-        except (socket.timeout, OSError):
+        except socket.timeout:
+            # Sem dados no período — normal, o central só envia sob demanda
+            continue
+        except OSError:
+            # Erro real de rede (conexão quebrada, reset, etc.)
             return
 
 
@@ -184,14 +171,18 @@ def _handle_command(msg: dict):
             print(f"[CMD] night_mode={state['night_mode']}")
 
         elif mtype == "emergency_mode":
-            state["emergency_active"] = msg.get("active", False)
+            state["emergency_active"]       = msg.get("active", False)
             state["emergency_signal_group"] = msg.get("signal_group", 0)
-            print(f"[CMD] emergency_mode={state['emergency_active']} sg={state['emergency_signal_group']}")
+            print(f"[CMD] emergency_mode={state['emergency_active']} "
+                  f"sg={state['emergency_signal_group']}")
 
         elif mtype == "manual_signal":
-            code = msg.get("code", 0)
-            state["manual_override"] = True
-            state["manual_code"] = code
+            code = msg.get("code", -1)
+            if code < 0:
+                state["manual_override"] = False
+            else:
+                state["manual_override"] = True
+                state["manual_code"]     = code
             print(f"[CMD] manual_signal code={code}")
 
 
@@ -207,6 +198,7 @@ def send_to_central(msg: dict):
 
 
 def _traffic_reporter():
+    """Envia contagem acumulada por sensor a cada 2 s."""
     while True:
         time.sleep(TRAFFIC_REPORT_INTERVAL)
         with _lock:
@@ -214,17 +206,16 @@ def _traffic_reporter():
         msg = protocol.traffic_count(INTERSECTION_ID, counts_snapshot)
         send_to_central(msg)
 
-
 # ======================================================================
 # DEBOUNCE — BOTÕES
 # ======================================================================
 
 class DebouncedButton:
     def __init__(self, pin: int, name: str, debounce: float = DEBOUNCE_S):
-        self.pin = pin
-        self.name = name
+        self.pin     = pin
+        self.name    = name
         self.debounce = debounce
-        self._last = 0.0
+        self._last   = 0.0
 
     def check(self) -> bool:
         if GPIO.input(self.pin):
@@ -236,8 +227,8 @@ class DebouncedButton:
         return False
 
 
-_btn_main  = DebouncedButton(BTN_MAIN,  "Cruzamento1-Principal")
-_btn_cross = DebouncedButton(BTN_CROSS, "Cruzamento1-Travessia")
+_btn_main  = DebouncedButton(BTN_MAIN,  f"C{INTERSECTION_ID}-Principal")
+_btn_cross = DebouncedButton(BTN_CROSS, f"C{INTERSECTION_ID}-Travessia")
 
 
 def _button_poll():
@@ -250,69 +241,49 @@ def _button_poll():
                 state["btn_cross_pressed"] = True
         time.sleep(0.01)
 
-
 # ======================================================================
-# SENSORES DE VELOCIDADE — interrupção em borda de subida
+# SENSORES DE VELOCIDADE — callbacks de interrupção
 # ======================================================================
 
-def _on_sensor1_a(channel):
-    with _lock:
-        state["sensor1_a_time"] = time.monotonic()
+def _make_callbacks(sensor_id: int):
+    """Fecha sensor_id no escopo dos callbacks."""
+
+    def on_a(channel):
+        with _lock:
+            state["sensor_a_times"][sensor_id] = time.monotonic()
+
+    def on_b(channel):
+        with _lock:
+            t_a = state["sensor_a_times"][sensor_id]
+        if t_a is None:
+            return
+        dt = time.monotonic() - t_a
+        if dt <= 0:
+            return
+        speed = (SENSOR_DISTANCE_M / dt) * 3.6
+        with _lock:
+            state["counts"][sensor_id] += 1
+            state["sensor_a_times"][sensor_id] = None
+        ts = datetime.now(timezone.utc).isoformat()
+        print(f"[SPD] Sensor {sensor_id}: {speed:.1f} km/h")
+        if speed > SPEED_LIMIT_KMH:
+            send_to_central(
+                protocol.speed_alert(INTERSECTION_ID, sensor_id, speed, ts)
+            )
+
+    return on_a, on_b
 
 
-def _on_sensor1_b(channel):
-    with _lock:
-        t_a = state["sensor1_a_time"]
-    if t_a is None:
-        return
-    dt = time.monotonic() - t_a
-    if dt <= 0:
-        return
-    speed = (SENSOR_DISTANCE_M / dt) * 3.6
-    with _lock:
-        state["counts"][1] += 1
-        state["sensor1_a_time"] = None
-    ts = datetime.now(timezone.utc).isoformat()
-    print(f"[SPD] Sensor1: {speed:.1f} km/h")
-    if speed > SPEED_LIMIT_KMH:
-        send_to_central(protocol.speed_alert(INTERSECTION_ID, 1, speed, ts))
-
-
-def _on_sensor2_a(channel):
-    with _lock:
-        state["sensor2_a_time"] = time.monotonic()
-
-
-def _on_sensor2_b(channel):
-    with _lock:
-        t_a = state["sensor2_a_time"]
-    if t_a is None:
-        return
-    dt = time.monotonic() - t_a
-    if dt <= 0:
-        return
-    speed = (SENSOR_DISTANCE_M / dt) * 3.6
-    with _lock:
-        state["counts"][2] += 1
-        state["sensor2_a_time"] = None
-    ts = datetime.now(timezone.utc).isoformat()
-    print(f"[SPD] Sensor2: {speed:.1f} km/h")
-    if speed > SPEED_LIMIT_KMH:
-        send_to_central(protocol.speed_alert(INTERSECTION_ID, 2, speed, ts))
-
-
-GPIO.add_event_detect(SENSOR1_A, GPIO.RISING, callback=_on_sensor1_a)
-GPIO.add_event_detect(SENSOR1_B, GPIO.RISING, callback=_on_sensor1_b)
-GPIO.add_event_detect(SENSOR2_A, GPIO.RISING, callback=_on_sensor2_a)
-GPIO.add_event_detect(SENSOR2_B, GPIO.RISING, callback=_on_sensor2_b)
-
+for _s in SENSORS_CFG:
+    _on_a, _on_b = _make_callbacks(_s["sensor_id"])
+    GPIO.add_event_detect(_s["pin_a"], GPIO.RISING, callback=_on_a)
+    GPIO.add_event_detect(_s["pin_b"], GPIO.RISING, callback=_on_b)
 
 # ======================================================================
 # FSM — SEMÁFOROS
 # ======================================================================
 
 class SignalState:
-    """Estado base da FSM de semáforos."""
     CODE:     int   = 0
     DURATION: float = 0.0
     MINIMUM:  float = 0.0
@@ -407,10 +378,10 @@ class AllRedToMain(SignalState):
 class SignalFSM:
     def __init__(self):
         self._state: SignalState = MainGreen()
-        self.start_time: float = 0.0
+        self.start_time: float   = 0.0
         self._state.enter(self)
         self._night_last_toggle: float = 0.0
-        self._night_phase: int = 0    # 0 → código 0, 1 → código 4
+        self._night_phase: int         = 0
 
     def _change(self, new_state: SignalState):
         self._state = new_state
@@ -431,11 +402,10 @@ class SignalFSM:
 
         # Prioridade 2: emergência
         if emergency:
-            code = 1 if em_group == 1 else 5
-            write_signal(code)
+            write_signal(1 if em_group == 1 else 5)
             return
 
-        # Prioridade 3: modo noturno (pisca-pisca)
+        # Prioridade 3: modo noturno (pisca-pisca 1 s cada fase)
         if night:
             now = time.monotonic()
             if now - self._night_last_toggle >= 1.0:
@@ -444,11 +414,10 @@ class SignalFSM:
                 write_signal(0 if self._night_phase == 0 else 4)
             return
 
-        # Prioridade 4: ciclo normal
+        # Prioridade 4: ciclo normal da FSM
         next_state = self._state.update(self)
         if next_state is not None:
             self._change(next_state)
-
 
 # ======================================================================
 # MAIN
@@ -456,14 +425,13 @@ class SignalFSM:
 
 def main():
     print(f"[DIST] Servidor Distribuído — Cruzamento {INTERSECTION_ID}")
+    print(f"[DIST] Config: {_CONFIG_FILE}")
 
-    # Threads de fundo
     threading.Thread(target=_connect_to_central, daemon=True).start()
     threading.Thread(target=_button_poll,         daemon=True).start()
     threading.Thread(target=_traffic_reporter,    daemon=True).start()
 
     fsm = SignalFSM()
-
     try:
         while True:
             fsm.run_once()
