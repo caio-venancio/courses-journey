@@ -1,0 +1,12 @@
+{
+    "intersection_id": 1,
+    "central_host": "127.0.0.1",
+    "central_port": 9000,
+    "signal_pins": [17, 18, 23],
+    "btn_main": 1,
+    "btn_cross": 12,
+    "sensors": [
+        {"sensor_id": 1, "pin_a": 16, "pin_b": 20},
+        {"sensor_id": 2, "pin_a": 21, "pin_b": 27}
+    ]
+}

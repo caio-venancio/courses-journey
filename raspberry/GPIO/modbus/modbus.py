@@ -232,6 +232,7 @@ class ModbusRTU:
         data = struct.pack(f">{count}H", *values)
 
         payload = header + data
+        
         frame = add_crc(payload + self._matricula)
 
         for attempt in range(1, self.MAX_RETRIES + 1):

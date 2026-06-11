@@ -1,0 +1,44 @@
+{
+    "central": {
+        "host": "0.0.0.0",
+        "port": 9000,
+        "serial_port": "/dev/serial0",
+        "modbus_baud": 115200,
+        "matricula": "027195",
+        "log_file": "multas.log",
+        "state_file": "central_state.json"
+    },
+    "traffic_rules": {
+        "speed_limit_kmh": 60.0,
+        "sensor_distance_m": 2.4,
+        "fine_mild": 195.23,
+        "fine_moderate": 293.47,
+        "fine_severe": 880.41,
+        "main_green_min": 15,
+        "main_green_max": 30,
+        "cross_green_min": 5,
+        "cross_green_max": 10,
+        "yellow_duration": 3,
+        "all_red_duration": 2
+    },
+    "intersections": {
+        "1": {
+            "signal_pins": [17, 18, 23],
+            "btn_main": 1,
+            "btn_cross": 12,
+            "sensors": [
+                {"sensor_id": 1, "pin_a": 16, "pin_b": 20},
+                {"sensor_id": 2, "pin_a": 21, "pin_b": 27}
+            ]
+        },
+        "2": {
+            "signal_pins": [24, 8, 7],
+            "btn_main": 25,
+            "btn_cross": 22,
+            "sensors": [
+                {"sensor_id": 3, "pin_a": 11, "pin_b": 0},
+                {"sensor_id": 4, "pin_a": 5,  "pin_b": 6}
+            ]
+        }
+    }
+}
