@@ -1,0 +1,10 @@
+FROM ubuntu:24.04
+
+COPY setup_dns.sh /setup_dns.sh
+
+RUN chmod +x /setup_dns.sh
+
+EXPOSE 53/tcp
+EXPOSE 53/udp
+
+CMD ["/setup_dns.sh"]
