@@ -1,0 +1,13 @@
+# FROM ubuntu:24.04
+
+# RUN apt-get update \
+# 	&& apt-get upgrade -y \
+# 	&& rm -rf /var/lib/apt/lists/*
+
+# COPY setup_www.sh /setup_www.sh
+
+# RUN chmod +x /setup_www.sh
+
+# EXPOSE 80
+
+# CMD ["/setup_www.sh"]

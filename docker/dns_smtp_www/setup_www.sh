@@ -57,7 +57,8 @@ DocumentRoot $ROOT
 <Directory $ROOT>
 Options Indexes FollowSymLinks
 AllowOverride All
-Require all granted </Directory>
+Require all granted
+</Directory>
 
 ErrorLog ${APACHE_LOG_DIR}/pipevendas_error.log
 CustomLog ${APACHE_LOG_DIR}/pipevendas_access.log combined
@@ -69,6 +70,9 @@ echo "===== Habilitando site ====="
 
 a2dissite 000-default.conf || true
 a2ensite "$DOMINIO.conf"
+
+echo "ServerName pipevendas.com.br" \
+> /etc/apache2/conf-available/servername.conf
 
 echo "===== Validando ====="
 

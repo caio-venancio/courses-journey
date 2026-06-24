@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 EMPRESA="PipeVendas"
 DOMINIO="pipevendas.com.br"
@@ -20,11 +20,9 @@ echo "===== Instalando BIND ====="
 export DEBIAN_FRONTEND=noninteractive
 
 apt update
+apt install -y bind9 bind9-utils dnsutils
 
-apt install -y 
-bind9 
-bind9-utils 
-dnsutils
+mkdir -p /etc/bind
 
 echo "===== Configurando opções ====="
 
@@ -42,6 +40,14 @@ $DNS_FORWARD3;
 forward only;
 
 allow-recursion {
+127.0.0.1;
+172.17.0.0/16;
+192.168.10.0/24;
+};
+
+allow-query-cache {
+127.0.0.1;
+172.17.0.0/16;
 192.168.10.0/24;
 };
 
@@ -66,8 +72,6 @@ none;
 version "not available";
 
 };
-
-include "/etc/bind/named.conf.local";
 EOF
 
 echo "===== Configurando zonas ====="
@@ -84,13 +88,13 @@ file "/etc/bind/db.10.168.192";
 };
 EOF
 
-echo "===== Zona direta ====="
+echo "===== Criando zona direta ====="
 
 cat > /etc/bind/db.$DOMINIO <<EOF
-$TTL 86400
+\$TTL 86400
 
 @ IN SOA ns1.$DOMINIO. admin.$DOMINIO. (
-2026062001
+2026062101
 21600
 1800
 604800
@@ -101,27 +105,27 @@ $TTL 86400
 
 @ IN MX 10 mail.$DOMINIO.
 
-ns1 IN A $IP_DNS
-router IN A $IP_ROTEADOR
-www IN A $IP_WWW
-dhcp IN A $IP_DHCP
-mail IN A $IP_SMTP
+ns1     IN A $IP_DNS
+router  IN A $IP_ROTEADOR
+www     IN A $IP_WWW
+dhcp    IN A $IP_DHCP
+mail    IN A $IP_SMTP
 
-smtp IN CNAME mail
-imap IN CNAME mail
-pop3 IN CNAME mail
+smtp    IN CNAME mail
+imap    IN CNAME mail
+pop3    IN CNAME mail
 
-site IN CNAME www
-portal IN CNAME www
+site    IN CNAME www
+portal  IN CNAME www
 EOF
 
-echo "===== Zona reversa ====="
+echo "===== Criando zona reversa ====="
 
 cat > /etc/bind/db.10.168.192 <<EOF
-$TTL 86400
+\$TTL 86400
 
 @ IN SOA ns1.$DOMINIO. admin.$DOMINIO. (
-2026062001
+2026062101
 21600
 1800
 604800
@@ -131,10 +135,10 @@ $TTL 86400
 @ IN NS ns1.$DOMINIO.
 
 254 IN PTR router.$DOMINIO.
-2 IN PTR ns1.$DOMINIO.
-3 IN PTR [www.$DOMINIO](http://www.$DOMINIO).
-4 IN PTR dhcp.$DOMINIO.
-5 IN PTR mail.$DOMINIO.
+2   IN PTR ns1.$DOMINIO.
+3   IN PTR www.$DOMINIO.
+4   IN PTR dhcp.$DOMINIO.
+5   IN PTR mail.$DOMINIO.
 EOF
 
 echo "===== Ajustando permissões ====="
@@ -142,24 +146,23 @@ echo "===== Ajustando permissões ====="
 chown bind:bind /etc/bind/db.$DOMINIO
 chown bind:bind /etc/bind/db.10.168.192
 
-echo "===== Validando ====="
+echo "===== Validando configuração ====="
 
 named-checkconf
 
-named-checkzone 
-$DOMINIO 
-/etc/bind/db.$DOMINIO
-
-named-checkzone 
-10.168.192.in-addr.arpa 
-/etc/bind/db.10.168.192
+echo ""
+echo "Validando zona direta..."
+named-checkzone "$DOMINIO" "/etc/bind/db.$DOMINIO"
 
 echo ""
-echo "DNS configurado"
+echo "Validando zona reversa..."
+named-checkzone "10.168.192.in-addr.arpa" "/etc/bind/db.10.168.192"
+
+echo ""
+echo "DNS configurado com sucesso"
 echo ""
 
 echo "===== Iniciando BIND ====="
 
-exec named 
--g 
--u bind
+exec named -g -u bind
+
