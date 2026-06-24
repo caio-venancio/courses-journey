@@ -50,8 +50,18 @@ options {
     // SEGURANÇA
     // ============================================
     // Só permite recursão para nossa rede interna
-    allow-recursion { 192.168.10.0/24; };
-    
+    allow-recursion {
+    127.0.0.1;
+    172.17.0.0/16;
+    192.168.10.0/24;
+    };
+
+    allow-query-cache {
+    127.0.0.1;
+    172.17.0.0/16;
+    192.168.10.0/24;
+    };
+
     // Aceita consultas de qualquer um (mas só recursão da rede interna)
     allow-query { any; };
     
